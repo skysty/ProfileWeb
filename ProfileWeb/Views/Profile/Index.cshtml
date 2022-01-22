@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="pagination" class="display">
+    <thead>
+        <tr>
+            <th>
+                АТЫ-ЖӨНІ
+            </th>
+            <th>
+                ҚҰРЫЛЫМЫ (ФАКУЛЬТЕТІ):
+            </th>
+             <th>
+                ҚҰРЫЛЫМЫ (КАФЕДРАСЫ):
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            
+            <td>
+                @string.Join("  ", item.Firstname_kz, item.Middlename_kz, item.Lastname_kz)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Faculties.KZ_AD)
+            </td>
+             <td>
+                @Html.DisplayFor(modelItem => item.Kafedra.KZ_AD)
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

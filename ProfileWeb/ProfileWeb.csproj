@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-ProfileWeb-0246B33D-E5F3-4D34-B34B-25200913934A</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20220117043132_initial.cs" />
+    <Compile Remove="Migrations\20220117043132_initial.Designer.cs" />
+    <Compile Remove="Migrations\20220117052255_ini.cs" />
+    <Compile Remove="Migrations\20220117052255_ini.Designer.cs" />
+    <Compile Remove="Migrations\20220117052924_ini.cs" />
+    <Compile Remove="Migrations\20220117052924_ini.Designer.cs" />
+    <Compile Remove="Migrations\20220117055432_inWithdate.cs" />
+    <Compile Remove="Migrations\20220117055432_inWithdate.Designer.cs" />
+    <Compile Remove="Migrations\20220117155024_iniWithData.cs" />
+    <Compile Remove="Migrations\20220117155024_iniWithData.Designer.cs" />
+    <Compile Remove="Migrations\20220117161706_initWithData.cs" />
+    <Compile Remove="Migrations\20220117161706_initWithData.Designer.cs" />
+    <Compile Remove="Migrations\20220117162201_initWith.cs" />
+    <Compile Remove="Migrations\20220117162201_initWith.Designer.cs" />
+    <Compile Remove="Migrations\20220118065344_initWD.cs" />
+    <Compile Remove="Migrations\20220118065344_initWD.Designer.cs" />
+    <Compile Remove="Migrations\20220118065656_initWD.cs" />
+    <Compile Remove="Migrations\20220118065656_initWD.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.21" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.21" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.21" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.21" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.21" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\documents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\js\jq.js" />
+    <None Include="wwwroot\lib\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\lib\js\jquery.min.js" />
+  </ItemGroup>
+
+</Project>

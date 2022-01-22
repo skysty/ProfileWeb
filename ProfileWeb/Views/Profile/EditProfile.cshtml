@@ -1,0 +1,136 @@
+﻿@model ProfileWeb.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "EditProfile";
+}
+
+<h1>EditProfile</h1>
+
+<h4>ApplicationUser</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditProfile"  method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Firstname_kz" class="control-label"></label>
+                <input asp-for="Firstname_kz" class="form-control" />
+                <span asp-validation-for="Firstname_kz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname_kz" class="control-label"></label>
+                <input asp-for="Lastname_kz" class="form-control" />
+                <span asp-validation-for="Lastname_kz" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Middlename_kz" class="control-label"></label>
+                <input asp-for="Middlename_kz" class="form-control" />
+                <span asp-validation-for="Middlename_kz" class="text-danger"></span>
+            </div>
+            <div class="container-3"> 
+                 <p>
+                    <button id="toggleIcon1" onclick="toggle1()">&gt;</button>
+                </p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                 <th>
+                                    ЗЕРТТЕУ ЖҰМЫСТАРЫ, ЖАРИЯЛАНЫМДАРЫ (ПРИОРИТЕТТІ БАҒЫТТАРЫ):
+                                </th>
+                                <th>
+                                    ФАЙЛ:
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @for(int i=0; i<Model.Researches.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <input asp-for="@Model.Researches[i].KZ_Title" class="form-control" />
+                                </td>
+                                <td>
+                                    <input type="file" asp-for="@Model.Researches[i].Document"  accept=".pdf,.doc,.docx" class="form-control" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                 <table class="table">
+                    <thead>
+                        <tr>
+                             <th>
+                                ЖЕТІСТІКТЕРІ:
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach(var item in Model.Qulifications)*@
+                        @for(int i=0; i<Model.Achievements.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <input asp-for="@Model.Achievements[i].KZ_Topic" class="form-control" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                 <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                 ЕҢБЕК ЖОЛЫ:
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach(var item in Model.Qulifications)*@
+                        @for(int i=0; i<Model.WorkWays.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <input asp-for="@Model.WorkWays[i].KZ_Work" class="form-control" />
+                                    @*<span asp-validation-for="@Model.Qulifications[i].TR_Qu" class="text-danger"></span>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                 <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                 БІЛІКТІЛІКТІ ЖЕТІЛДІРУ:
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*@foreach(var item in Model.Qulifications)*@
+                        @for(int i=0; i<Model.Qulifications.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <input asp-for="@Model.Qulifications[i].KZ_Qu" class="form-control" />
+                                    @*<span asp-validation-for="@Model.Qulifications[i].TR_Qu" class="text-danger"></span>*@
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+               
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

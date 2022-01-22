@@ -1,0 +1,37 @@
+﻿        $(document).ready(function() {
+                $('#pagination').DataTable( {
+                    "pageLength": 25,
+                    language: {
+                        "processing": "КҮТЕ ТҰРЫҢЫЗ...",
+                        "search": "ІЗДЕУ:",
+                        "lengthMenu": "ЖАЗБАЛАР _MENU_ КӨРСЕТУ",
+                        "info": "_TOTAL_ ЖАЗБАЛАРЫ БОЙЫНША _START_ БАСТАП _END_ ДЕЙІНГІ ЖАЗБАЛАР",
+                        "infoEmpty": "0 ЖАЗБАЛАРЫ БОЙЫНША 0 БАСТАП 0 ДЕЙІНГІ ЖАЗБАЛАР",
+                        "infoFiltered": "(_MAX_ ЖАЗБАСЫНАН СҰРЫПТАЛДЫ)",
+                        "loadingRecords": "ЖАЗБАЛАР ЖҮКТЕМЕСІ...",
+                        "zeroRecords": "ЖАЗБАЛАР ЖОҚ",
+                        "emptyTable": "КЕСТЕДЕ ДЕРЕКТЕР ЖОҚ",
+                        "paginate": {
+                            "first": "БІРІНШІ",
+                            "previous": "АРТҚА",
+                            "next": "АЛҒА",
+                            "last": "СОҢҒЫ"
+                        },
+                        "aria": {
+                            "sortAscending": ": ӨСІМІ БОЙЫНША БАҒАНДЫ СҰРЫПТАУ ҮШІН АКТИВАЦИЯЛАУ",
+                            "sortDescending": ": КЕМУІ БОЙЫНША БАҒАНДЫ СҰРЫПТАУ ҮШІН АКТИВАЦИЯЛАУ"
+                        },
+                        "autoFill": {
+                            "cancel": "ДОҒАРУ",
+                            "fill": "ТОЛЫҚТЫРУ",
+                            "fillHorizontal": "КӨЛДЕНЕҢ ТОЛТЫРУ",
+                            "fillVertical": "ТІГІНЕН ТОЛТЫРУ"
+                        },
+                        "buttons": {
+                            "colvis": "БАҒАН КӨРНІСІ",
+                            "colvisRestore": "ҚАЛПЫНА КЕЛТІРУ",
+                            "copy": "НҰСҚАЛАУ"
+                        }
+                    }
+                } );
+            } );

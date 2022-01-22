@@ -1,0 +1,43 @@
+﻿@model ProfileWeb.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+<div class="container-2">
+      <div class="left">
+        @if (Model.PhotoUrl != null)
+                             {
+                                 <img class="portrait" src="~/images/@Model.PhotoUrl" alt="">
+                             }
+                             else
+                             {
+                                 <img class="portrait" src="~/photo/tps-img.jpg" alt="">
+                             }
+         </div>
+   
+   
+        <div class="right">
+            <p class="first">АТЫ-ЖӨНІ:</p>
+                    <p class="sql">@Html.DisplayFor(model => model.Firstname_kz)  @Html.DisplayFor(model => model.Middlename_kz) @Html.DisplayFor(model => model.Lastname_kz)</p>
+                    <p>ҚҰРЫЛЫМЫ (БӨЛІМІ, ФАКУЛЬТЕТІ, КАФЕДРАСЫ):</p>
+                    <p class="sql">@Html.DisplayFor(model => model.Faculties.KZ_AD), 
+                        <br>@Html.DisplayFor(model => model.Kafedra.KZ_AD)</p>
+                    <p>ҚЫЗМЕТІ (ҒЫЛЫМИ ДӘРЕЖЕСІ, АТАҒЫ):</p>
+                    <p class="sql">@Html.DisplayFor(model => model.Degree.TR_AD)
+                        <br>@Html.DisplayFor(model => model.Ranks.TR_AD)
+                    </p>
+                    <p>МЕКЕН-ЖАЙЫ:</p>
+                    <p class="sql">@Html.DisplayFor(model => model.Address)</p>
+                    <p>ТЕЛЕФОНЫ:</p>
+                    <p class="sql">@Html.DisplayFor(model => model.PhoneNumber)</p>
+                    <p>ЭЛЕКТРОНДЫ ПОШТАСЫ:</p>
+                    <p class="sql last">@Html.DisplayFor(model => model.Email)</p>
+        </div>
+
+        </div>
