@@ -29,8 +29,13 @@ namespace ProfileWeb.Controllers
         // GET: Profile
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ApplicationUsers.Include(a => a.Degree).Include(a => a.Faculties).Include(a => a.Kafedra).Include(a => a.Ranks).Include(a => a.Sex);
-            return View(await applicationDbContext.ToListAsync());
+            var userId = _userManager.GetUserId(HttpContext.User);
+            ViewBag.UserId = userId;
+            if (userId != null) {
+                return RedirectToAction(nameof(Details), new { id = userId });
+            }
+            var applicationDbContext = await _context.ApplicationUsers.Include(a => a.Degree).Include(a => a.Faculties).Include(a => a.Kafedra).Include(a => a.Ranks).Include(a => a.Sex).ToListAsync();
+            return View(applicationDbContext);
         }
 
         // GET: Profile/Details/5
@@ -48,7 +53,12 @@ namespace ProfileWeb.Controllers
                 .Include(a => a.Kafedra)
                 .Include(a => a.Ranks)
                 .Include(a => a.Sex)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(a => a.Qulifications)
+                .Include(d => d.Researches)
+                .Include(c => c.Achievements)
+                .Include(e => e.WorkWays)
+                .Where(a => a.Id == id)
+                .FirstOrDefaultAsync();
             if (applicationUser == null)
             {
                 return NotFound();
@@ -137,7 +147,7 @@ namespace ProfileWeb.Controllers
             if (result.Succeeded)
             {
                 TempData["save"] = "User has been updated successfully";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = applicationUser.Id });
             }
 
             ViewData["degree"] = new SelectList(_context.Degrees.ToList(), "Degree_ID", "TR_AD");
@@ -156,13 +166,13 @@ namespace ProfileWeb.Controllers
                 return NotFound();
             }
 
-            var applicationUser = await _context.Users
+            var applicationUser = await _context.ApplicationUsers
                 .Include(a => a.Degree)
                 .Include(a => a.Faculties)
                 .Include(a => a.Kafedra)
                 .Include(a => a.Ranks)
                 .Include(a => a.Sex)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(a => a.Id == id);
             if (applicationUser == null)
             {
                 return NotFound();
@@ -196,115 +206,101 @@ namespace ProfileWeb.Controllers
             }
 
             var applicationUser = await _context.ApplicationUsers
-                .Include(a => a.Qulifications)
                 .Include(d => d.Researches)
-                .Include(c => c.Achievements)
-                .Include(e => e.WorkWays)
                 .Where(c => c.Id == id).FirstOrDefaultAsync();
             if (applicationUser == null)
             {
                 return NotFound();
             }
-            applicationUser.Qulifications.Add(new Qulification() { Qu_Id = 1 });
-            applicationUser.Qulifications.Add(new Qulification() { Qu_Id = 2 });
+          
             applicationUser.Researches.Add(new Research() { Res_Id = 1 });
-            applicationUser.Researches.Add(new Research() { Res_Id = 2 });
-            applicationUser.Achievements.Add(new Achievement() { Topic_Id = 1 });
-            applicationUser.Achievements.Add(new Achievement() { Topic_Id = 2 });
-            applicationUser.WorkWays.Add(new Workway() { Work_Id = 1 });
-            applicationUser.WorkWays.Add(new Workway() { Work_Id = 2 });
+            //applicationUser.Researches.Add(new Research() { Res_Id = 2 });
             return View(applicationUser);
         }
         [HttpPost]
         public async Task<IActionResult> EditProfile(ApplicationUser applicant)
         {
             var userInfo = await _context.ApplicationUsers
-                .Include(a => a.Qulifications)
                 .Include(d => d.Researches)
-                .Include(c => c.Achievements)
-                .Include(e => e.WorkWays)
                 .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
             if (userInfo == null)
             {
                 return NotFound();
             }
-            userInfo.Qulifications = applicant.Qulifications;
-            userInfo.WorkWays = applicant.WorkWays;
+          
             userInfo.Researches = applicant.Researches;
-            userInfo.Achievements = applicant.Achievements;
+           
 
 
-            foreach (Qulification qulification in userInfo.Qulifications.ToList())
-            {
-                if (qulification.KZ_Qu == null || qulification.KZ_Qu.Length == 0)
-                    userInfo.Qulifications.Remove(qulification);
-            }
+         
             //Research
+            //uniqueFileNames
+            List<string> uniqueFileNames = GetUploadedFileNames(applicant);
             foreach (Research research in userInfo.Researches.ToList())
             {
-                if ((research.KZ_Title == null || research.KZ_Title.Length == 0)&&
+                if ((research.KZ_Title == null || research.KZ_Title.Length == 0) &&
                     (research.Document == null || research.Document.Length == 0))
-                { 
+                
                     userInfo.Researches.Remove(research);
-                }
-                else
-                {
-                    List<string> uniqueFileNames = GetUploadedFileNames(applicant);
 
-                    foreach (string uniqueFileName in uniqueFileNames)
+                foreach (string uniqueFileName in uniqueFileNames)
+                {
+                    for (int i = 0; i < userInfo.Researches.Count; i++)
                     {
-                            for (int i = 0; i < userInfo.Researches.Count; i++)
-                            {
-                            if (research.FileUrl != null) {
-                                continue;
-                            }else
-                            {
-                                userInfo.Researches.Insert(i, new Research { FileUrl = uniqueFileName });
-                                break;
-                            }
+                        if (userInfo.Researches[i].FileUrl == null) {
+                            userInfo.Researches[i].FileUrl = uniqueFileName;
+                        }
+                        else if (uniqueFileName.Equals(userInfo.Researches[i].FileUrl))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            continue;
                         }
                     }
                 }
-            }
-            foreach (Achievement achievement in userInfo.Achievements.ToList())
-            {
-                if (achievement.KZ_Topic == null || achievement.KZ_Topic.Length == 0)
-                    userInfo.Achievements.Remove(achievement);
-            }
-            foreach (Workway workway in userInfo.WorkWays.ToList())
-            {
-                if (workway.KZ_Work == null || workway.KZ_Work.Length == 0)
-                    userInfo.WorkWays.Remove(workway);
             }
 
             var result = await _userManager.UpdateAsync(userInfo);
             if (result.Succeeded)
             {
                 TempData["save"] = "User has been updated successfully";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = applicant.Id });
             }
+
+
+
             return View(applicant);
 
         }
+        
         private List<string> GetUploadedFileNames(ApplicationUser applicant)
         {
-            
+            string filename = null;
              var uniqueFileNames=new List<string>();
 
             if (applicant.Researches != null)
             {
                 foreach (var file in applicant.Researches)
                 {
-                    string uniq = null;
-                    string uploadsFolder = Path.Combine(_webHost.WebRootPath, "documents");
-                    uniq = Guid.NewGuid().ToString() + "_" + file.Document.FileName;
-                    uniqueFileNames.Add(uniq);
-                    string filePath = Path.Combine(uploadsFolder, uniq);
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    if (file.FileUrl != null)
                     {
-                        file.Document.CopyTo(fileStream);
+                         filename = file.FileUrl;
+                        uniqueFileNames.Add(filename);
                     }
-                    break;
+                    else
+                    {
+                        string uniq = null;
+                        string uploadsFolder = Path.Combine(_webHost.WebRootPath, "documents");
+                        uniq = Guid.NewGuid().ToString() + "_" + file.Document.FileName;
+                        uniqueFileNames.Add(uniq);
+                        string filePath = Path.Combine(uploadsFolder, uniq);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.Document.CopyTo(fileStream);
+                        }
+                    }
                 }
             }
             return uniqueFileNames;
@@ -324,6 +320,189 @@ namespace ProfileWeb.Controllers
                 }
             }
             return uniqueFileName;
+        }
+        public async Task<IActionResult> Info(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var applicationUser = await _context.ApplicationUsers
+                .Include(a => a.Degree)
+                .Include(a => a.Faculties)
+                .Include(a => a.Kafedra)
+                .Include(a => a.Ranks)
+                .Include(a => a.Sex)
+                .Include(a => a.Qulifications)
+                .Include(d => d.Researches)
+                .Include(c => c.Achievements)
+                .Include(e => e.WorkWays)
+                .Where(a => a.Id == id)
+                .FirstOrDefaultAsync();
+            if (applicationUser == null)
+            {
+                return NotFound();
+            }
+
+            return View(applicationUser);
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditQu(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var applicationUser = await _context.ApplicationUsers
+                .Include(a => a.Qulifications)
+                .Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (applicationUser == null)
+            {
+                return NotFound();
+            }
+            applicationUser.Qulifications.Add(new Qulification() { Qu_Id = 1 });
+            //applicationUser.Qulifications.Add(new Qulification() { Qu_Id = 2 });
+            return View(applicationUser);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditQu(ApplicationUser applicant)
+        {
+            var userInfo = await _context.ApplicationUsers
+                .Include(a => a.Qulifications)
+                .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
+            if (userInfo == null)
+            {
+                return NotFound();
+            }
+            userInfo.Qulifications = applicant.Qulifications;
+
+
+            //Qulification
+            foreach (Qulification qulification in userInfo.Qulifications.ToList())
+            {
+                if (qulification.KZ_Qu == null || qulification.KZ_Qu.Length == 0)
+                    userInfo.Qulifications.Remove(qulification);
+            }
+         
+
+            var result = await _userManager.UpdateAsync(userInfo);
+            if (result.Succeeded)
+            {
+                TempData["save"] = "User has been updated successfully";
+                return RedirectToAction(nameof(Details), new { id = applicant.Id });
+            }
+
+
+
+            return View(applicant);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditWork(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var applicationUser = await _context.ApplicationUsers
+                .Include(e => e.WorkWays)
+                .Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (applicationUser == null)
+            {
+                return NotFound();
+            }
+            applicationUser.WorkWays.Add(new Workway() { Work_Id = 1 });
+            //applicationUser.WorkWays.Add(new Workway() { Work_Id = 2 });
+            return View(applicationUser);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditWork(ApplicationUser applicant)
+        {
+            var userInfo = await _context.ApplicationUsers
+                .Include(e => e.WorkWays)
+                .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
+            if (userInfo == null)
+            {
+                return NotFound();
+            }
+           
+            userInfo.WorkWays = applicant.WorkWays;
+
+
+           
+            //Workway
+            foreach (Workway workway in userInfo.WorkWays.ToList())
+            {
+                if (workway.KZ_Work == null || workway.KZ_Work.Length == 0)
+                    userInfo.WorkWays.Remove(workway);
+            }
+
+            var result = await _userManager.UpdateAsync(userInfo);
+            if (result.Succeeded)
+            {
+                TempData["save"] = "User has been updated successfully";
+                return RedirectToAction(nameof(Details), new { id = applicant.Id });
+            }
+
+
+
+            return View(applicant);
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditAchive(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var applicationUser = await _context.ApplicationUsers
+                .Include(c => c.Achievements)
+                .Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (applicationUser == null)
+            {
+                return NotFound();
+            }
+            
+            applicationUser.Achievements.Add(new Achievement() { Topic_Id = 1 });
+            return View(applicationUser);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditAchive(ApplicationUser applicant)
+        {
+            var userInfo = await _context.ApplicationUsers
+                .Include(c => c.Achievements)
+                .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
+            if (userInfo == null)
+            {
+                return NotFound();
+            }
+            
+            userInfo.Achievements = applicant.Achievements;
+
+
+          
+            //Achievement
+            foreach (Achievement achievement in userInfo.Achievements.ToList())
+            {
+                if (achievement.KZ_Topic == null || achievement.KZ_Topic.Length == 0)
+                    userInfo.Achievements.Remove(achievement);
+            }
+            var result = await _userManager.UpdateAsync(userInfo);
+            if (result.Succeeded)
+            {
+                TempData["save"] = "User has been updated successfully";
+                return RedirectToAction(nameof(Details), new { id = applicant.Id });
+            }
+
+
+
+            return View(applicant);
+
         }
     }
 }

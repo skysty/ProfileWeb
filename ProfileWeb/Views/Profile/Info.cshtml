@@ -1,17 +1,15 @@
 ﻿@model ProfileWeb.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Профиль";
+    ViewData["Title"] = "Толығырақ";
 }
 
 <h1>Толығырақ</h1>
-<div>
+@*<div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Түзету</a> |
-    <a asp-action="EditProfile" asp-route-id="@Model.Id">Зерттеу жұмыстарын қосу</a> |
-    <a asp-action="EditQu" asp-route-id="@Model.Id">Біліктілікті жетілдіру</a> |
-    <a asp-action="EditWork" asp-route-id="@Model.Id">Еңбек жолы</a> |
-     <a asp-action="EditAchive" asp-route-id="@Model.Id">Жетістіктер</a> |
-</div>
+    <a asp-action="Index">ОПҚ тізіміне қайту</a>|
+    <a asp-action="EditProfile" asp-route-id="@Model.Id">Зеріттеулермен жетістіктерді қосу</a> 
+</div>*@
 <div class="container-2">
       <div class="left">
         @if (Model.PhotoUrl != null)

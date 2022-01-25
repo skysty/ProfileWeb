@@ -50,7 +50,7 @@ namespace ProfileWeb.Areas.Identity.Pages.Account
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Мені есте сақта?")]
             public bool RememberMe { get; set; }
         }
 

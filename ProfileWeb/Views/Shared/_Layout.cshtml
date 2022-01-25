@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProfileWeb</title>
+    <title>@ViewData["Title"] - ОПҚ</title>
     <link rel="stylesheet" href="~/css/styles.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/jquery.dataTables.min.css" />
@@ -17,13 +17,11 @@
              <partial name="_LoginPartial" />
         </div>
         <header>
-            <a href="">ОПҚ ТІЗІМІ</a>
+            <a  asp-action="Index">ОПҚ ТІЗІМІ</a>
         </header>
 
    <div class="wrapper">
-       <div class="container-1">
-                <a href=""><span class="item-active">ОПҚ ТІЗІМІ</span></a>
-            </div>
+        <div class="container-1"> <a asp-action="Index">ОПҚ ТІЗІМІ</a>  </div>
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

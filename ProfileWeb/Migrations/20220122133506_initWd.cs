@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileWeb.Migrations
 {
-    public partial class initWD : Migration
+    public partial class initWd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -215,14 +215,15 @@ namespace ProfileWeb.Migrations
                 name: "Researches",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    Res_Id = table.Column<int>(nullable: false),
+                    Res_Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     KZ_Title = table.Column<string>(nullable: true),
-                    FileUrl = table.Column<string>(nullable: true)
+                    FileUrl = table.Column<string>(nullable: true),
+                    Id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Researches", x => x.Id);
+                    table.PrimaryKey("PK_Researches", x => x.Res_Id);
                     table.ForeignKey(
                         name: "FK_Researches_AspNetUsers_Id",
                         column: x => x.Id,
@@ -303,6 +304,11 @@ namespace ProfileWeb.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Qulifications_Id",
                 table: "Qulifications",
+                column: "Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Researches_Id",
+                table: "Researches",
                 column: "Id");
 
             migrationBuilder.CreateIndex(

@@ -10,8 +10,8 @@ using ProfileWeb.Data;
 namespace ProfileWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220118100404_initWD")]
-    partial class initWD
+    [Migration("20220122133506_initWd")]
+    partial class initWd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -465,19 +465,23 @@ namespace ProfileWeb.Migrations
 
             modelBuilder.Entity("ProfileWeb.Models.Research", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<int>("Res_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FileUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("KZ_Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Res_Id")
-                        .HasColumnType("int");
+                    b.HasKey("Res_Id");
 
-                    b.HasKey("Id");
+                    b.HasIndex("Id");
 
                     b.ToTable("Researches");
                 });

@@ -1,0 +1,114 @@
+﻿@model ProfileWeb.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Біліктілікті жетілдіру";
+}
+
+<h1></h1>
+
+<h4>БІЛІКТІЛІКТІ ЖЕТІЛДІРУ</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <form asp-action="EditQu" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+              @*expt*@
+        <div class="col-md-12">
+            <table table id="expt" class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            БІЛІКТІЛІКТІ ЖЕТІЛДІРУ:
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Qulifications.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @if (@Model.Qulifications[i].KZ_Qu != null)
+                                {
+                                    <input asp-for="@Model.Qulifications[i].KZ_Qu" class="form-control" readonly/>
+                                }
+                                else
+                                {
+                                    <input asp-for="@Model.Qulifications[i].KZ_Qu" class="form-control" />
+                                }
+                            </td>
+                            <td>
+                                <button id="btnadd3-@i" type="button" class="btn btn-secondary visible"
+                                        onclick="AddItem4(this)">
+                                    Қосу
+                                </button>
+                            </td>
+                            <td>
+                                <button id="btnremove3-@i" type="button" class="btn btn-danger invisible"
+                                        onclick="DeleteItem4(this)">
+                                    Жою
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @*expt*@
+            <input type="hidden" id="Index" value="@(Model.Qulifications?.Count != null ? Model.Qulifications.Count-1 : 0)" />
+        </div>
+            <div class="form-group">
+                <input type="submit" value="Сақтау" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+     <a asp-action="Details" asp-route-id="@Model.Id">Өз профиліңізге өту</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script type="text/javascript">
+ //expt
+    function DeleteItem4(btn) {
+        $(btn).closest('tr').remove();
+    }
+    function AddItem4(btn) {
+
+        var table = document.getElementById('expt');
+        var rows = table.getElementsByTagName('tr');
+
+        var rowOuterHtml = rows[rows.length - 1].outerHTML;
+
+        var lastrowIdx = document.getElementById('Index').value;
+
+        var nextrowIdx = eval(lastrowIdx) + 1;
+
+        document.getElementById('Index').value = nextrowIdx;
+
+        rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+        rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+        rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+
+        var newRow = table.insertRow();
+        newRow.innerHTML = rowOuterHtml;
+
+
+
+        var btnAddID = btn.id;
+        var btnDeleteid = btnAddID.replaceAll('btnadd3', 'btnremove3');
+
+        var delbtn = document.getElementById(btnDeleteid);
+        delbtn.classList.add("visible");
+        delbtn.classList.remove("invisible");
+
+
+        var addbtn = document.getElementById(btnAddID);
+        addbtn.classList.remove("visible");
+        addbtn.classList.add("invisible");
+        }
+  </script>

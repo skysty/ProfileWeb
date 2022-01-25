@@ -23,7 +23,6 @@ namespace ProfileWeb.Models
         public string Middlename_tr { get; set; } = "";
         public int UsernameChangeLimit { get; set; } = 10;
         public string PhotoUrl { get; set; }
-        [Required(ErrorMessage = "Please choose the Profile Photo")]
         [Display(Name = "Profile Photo")]
         [NotMapped]
         public IFormFile ProfilePhoto { get; set; }
@@ -49,7 +48,7 @@ namespace ProfileWeb.Models
         public virtual List<Workway> WorkWays { get; set; } = new List<Workway>();//detail very important
         public virtual List<Qulification> Qulifications { get; set; } = new List<Qulification>();//detail very important
         public virtual List<Achievement> Achievements { get; set; } = new List<Achievement>();//detail very important
-        public virtual List<Research> Researches { get; set; } = new List<Research>();//detail very important
+        public virtual List<Research> Researches { get; set; }
         //Degree
          [ForeignKey("Degree")]//very important
         public int? Degree_ID { get; set; }
