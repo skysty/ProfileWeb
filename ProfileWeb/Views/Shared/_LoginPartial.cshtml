@@ -12,18 +12,18 @@
             }
         </li>*@
         <li class="nav-item">
-            <p class="nav-link text-white" asp-action="Details" >@User.Identity.Name</p>
+            <a class="nav-link text-white" >@User.Identity.Name</a>
         </li>
         <li class="nav-item">
             <form class="nav-link text-white" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Profile", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-white">Шығу</button>
+                <button type="submit" class="nav-link btn btn-link text-white">ЖҮЙЕДЕН ШЫҒУ</button>
             </form>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Кіру</a>
+            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">ЖҮЙЕГЕ КІРУ</a>
         </li>
     }
 </ul>

@@ -14,7 +14,6 @@ namespace ProfileWeb.Models
         public int Res_Id { get; set; }
         public string KZ_Title { get; set; }
         public string FileUrl { get; set; }
-        [Required(ErrorMessage = "Please choose the File")]
         [Display(Name = "Document")]
         [NotMapped]
         public IFormFile Document { get; set; }

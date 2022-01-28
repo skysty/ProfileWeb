@@ -1,10 +1,10 @@
 ﻿@model ProfileWeb.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Толығырақ";
+    ViewData["Title"] = "ОПҚ ПРОФИЛІ";
 }
 
-<h1>Толығырақ</h1>
+<h1>ОПҚ ПРОФИЛІ</h1>
 @*<div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Түзету</a> |
     <a asp-action="Index">ОПҚ тізіміне қайту</a>|
@@ -26,8 +26,8 @@
         <div class="right">
             <p class="first">АТЫ-ЖӨНІ:</p>
                     <p class="sql">@Html.DisplayFor(model => model.Firstname_kz)  @Html.DisplayFor(model => model.Middlename_kz) @Html.DisplayFor(model => model.Lastname_kz)</p>
-                    <p>ҚҰРЫЛЫМЫ (БӨЛІМІ, ФАКУЛЬТЕТІ, КАФЕДРАСЫ):</p>
-                    <p class="sql">@Html.DisplayFor(model => model.Faculties.KZ_AD), 
+                    <p>ҚҰРЫЛЫМЫ (ФАКУЛЬТЕТІ, КАФЕДРАСЫ):</p>
+                    <p class="sql">@Html.DisplayFor(model => model.Faculties.KZ_AD)
                         <br>@Html.DisplayFor(model => model.Kafedra.KZ_AD)</p>
                     <p>ҚЫЗМЕТІ (ҒЫЛЫМИ ДӘРЕЖЕСІ, АТАҒЫ):</p>
                     <p class="sql">@Html.DisplayFor(model => model.Degree.TR_AD)
@@ -37,7 +37,7 @@
                     <p class="sql">@Html.DisplayFor(model => model.Address)</p>
                     <p>ТЕЛЕФОНЫ:</p>
                     <p class="sql">@Html.DisplayFor(model => model.PhoneNumber)</p>
-                    <p>ЭЛЕКТРОНДЫ ПОШТАСЫ:</p>
+                    <p>КОРПОРАТИВТІ ПОШТАСЫ:</p>
                     <p class="sql last">@Html.DisplayFor(model => model.Email)</p>
         </div>
 </div>
@@ -56,7 +56,7 @@
                         }
                         else
                         {
-                            <a  href="#"  target="_blank">Деректер жоқ</a><br>
+                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
                         }
                     }
     
@@ -75,7 +75,7 @@
                         else
                         {
 
-                            <a  href="#"  target="_blank">Деректер жоқ</a><br>
+                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
                         }
                     }
                 </p>
@@ -93,11 +93,11 @@
                         else
                         {
 
-                            <a  href="#"  target="_blank">Деректер жоқ</a><br>
+                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
                         }
                     }
                 </p>
-                <p>БІЛІКТІЛІКТІ ЖЕТІЛДІРУ:</p>
+                <p>БІЛІКТІЛІКТІ ЖЕТІЛДІРУІ:</p>
                 <p>
                     <button id="toggleIcon4" onclick="toggle4()">&gt;</button>
                 </p>
@@ -111,7 +111,7 @@
                         else
                         {
 
-                            <a  href="#"  target="_blank">Деректер жоқ</a><br>
+                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
                         }
                     }
                 </p>

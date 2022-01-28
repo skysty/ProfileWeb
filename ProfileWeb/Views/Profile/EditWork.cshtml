@@ -41,13 +41,13 @@
                             <td>
                                 <button id="btnadd2-@i" type="button" class="btn btn-secondary visible"
                                         onclick="AddItem3(this)">
-                                    Қосу
+                                    ҚОСУ
                                 </button>
                             </td>
                             <td>
                                 <button id="btnremove2-@i" type="button" class="btn btn-danger invisible"
                                         onclick="DeleteItem3(this)">
-                                    Жою
+                                    ЖОЮ
                                 </button>
                             </td>
                         </tr>
@@ -58,14 +58,14 @@
             <input type="hidden" id="LIndex" value="@(Model.WorkWays?.Count != null ? Model.WorkWays.Count-1 : 0)" />
         </div>
             <div class="form-group">
-                <input type="submit" value="Сақтау" class="btn btn-primary" />
+                <input type="submit" value="САҚТАУ" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-     <a asp-action="Details" asp-route-id="@Model.Id">Өз профиліңізге өту</a>
+     <a asp-action="Details" asp-route-id="@Model.Id">ПРОФИЛЬГЕ ҚАЙТУ</a>
 </div>
 
 @section Scripts {

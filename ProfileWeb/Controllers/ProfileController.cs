@@ -243,12 +243,17 @@ namespace ProfileWeb.Controllers
                 
                     userInfo.Researches.Remove(research);
 
-                foreach (string uniqueFileName in uniqueFileNames)
-                {
+                foreach (string uniqueFileName in uniqueFileNames.ToList())
+                {   if (uniqueFileName == null)
+                    {
+                        uniqueFileNames.Remove(uniqueFileName);
+                        continue;
+                    }
                     for (int i = 0; i < userInfo.Researches.Count; i++)
                     {
                         if (userInfo.Researches[i].FileUrl == null) {
                             userInfo.Researches[i].FileUrl = uniqueFileName;
+                            
                         }
                         else if (uniqueFileName.Equals(userInfo.Researches[i].FileUrl))
                         {
@@ -284,9 +289,9 @@ namespace ProfileWeb.Controllers
             {
                 foreach (var file in applicant.Researches)
                 {
-                    if (file.FileUrl != null)
+                    if (file.FileUrl != null|| file.Document==null)
                     {
-                         filename = file.FileUrl;
+                        filename = file.FileUrl;
                         uniqueFileNames.Add(filename);
                     }
                     else

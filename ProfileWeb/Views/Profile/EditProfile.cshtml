@@ -1,12 +1,12 @@
 ﻿@model ProfileWeb.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Зерттеу жұмыстары";
+    ViewData["Title"] = "ЗЕРТТЕУ ЖҰМЫСТАРЫ";
 }
 
 <h1></h1>
 
-<h4>Зерттеулер жұмыстармен жетістіктерді қосу</h4>
+<h4>ЗЕРТТЕУ ЖҰМЫСТАРЫ, ЖАРИЯЛАНЫМДАРЫ - ҚОСУ</h4>
 <hr />
 <div class="col-md-6 col-md-offset-2">
     <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
@@ -20,7 +20,7 @@
                             ЗЕРТТЕУ ЖҰМЫСТАРЫ, ЖАРИЯЛАНЫМДАРЫ (ПРИОРИТЕТТІ БАҒЫТТАРЫ):
                         </th>
                         <th>
-                            ФАЙЛ:
+                            ФАЙЛЫ:
                         </th>
                         <th></th>
                         <th></th>
@@ -74,7 +74,7 @@
             </table>
 
 
-            <input type="hidden" id="hdnLastIndex" value="@(Model.Researches?.Count != null ? Model.Researches.Count-1 : 0)" />
+            <input type="hidden" id="hdnLastIndex" value="@(Model.Researches?.Count != null ? Model.Researches.Count : 0)" />
             @*ExpTable*@
 
         </div>
@@ -82,13 +82,13 @@
         
 
         <div class="form-group">
-            <input type="submit" value="Сақтау" class="btn btn-primary" />
+            <input type="submit" value="САҚТАУ" class="btn btn-primary" />
         </div>
     </form>
 </div>
 
 <div>
-    <a asp-action="Details" asp-route-id="@Model.Id">Өз профиліңізге өту</a>
+    <a asp-action="Details" asp-route-id="@Model.Id">ПРОФИЛЬГЕ ҚАЙТУ</a>
 </div>
 
 @section Scripts {

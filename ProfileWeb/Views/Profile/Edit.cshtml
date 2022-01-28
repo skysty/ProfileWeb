@@ -1,13 +1,12 @@
 ﻿@model ProfileWeb.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "Түзету";
+    ViewData["Title"] = "ОПҚ ПОРТФОЛИОСЫН ТҮЗЕТУ";
 }
 
 <h1></h1>
 
-<h4>ОПҚ портфолиосын түзету</h4>
-<hr />
+<h4>ОПҚ ПОРТФОЛИОСЫН ТҮЗЕТУ</h4>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
@@ -15,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="col-md-6">
                         <div class="form-group">
-                            <label for="ProfilePhoto" style="width: 100%;">Профиль фотосы</label>
+                            <label for="ProfilePhoto" style="width: 100%;">ФОТОСЫ</label>
                              @if (Model.PhotoUrl != null)
                              {
                                  <img id="profilePicture" class="portrait"   src="~/images/@Model.PhotoUrl">
@@ -35,76 +34,76 @@
                </div>
 
             <div class="form-group">
-                <label for="Firstname_kz" class="control-label">Аты</label>
+                <label for="Firstname_kz" class="control-label">АТЫ:</label>
                 <input asp-for="Firstname_kz" class="form-control" readonly/>
                 <span asp-validation-for="Firstname_kz" class="text-danger"></span>
             </div>
            
             <div class="form-group">
-                <label for="Middlename_kz" class="control-label">"Әкесінің аты</label>
+                <label for="Middlename_kz" class="control-label">ӘКЕСІНІҢ АТЫ:</label>
                 <input asp-for="Middlename_kz" class="form-control" readonly/>
                 <span asp-validation-for="Middlename_kz" class="text-danger"></span>
             </div>
              <div class="form-group">
-                <label for="Lastname_kz" class="control-label">Тегі</label>
+                <label for="Lastname_kz" class="control-label">ТЕГІ:</label>
                 <input asp-for="Lastname_kz" class="form-control" readonly/>
                 <span asp-validation-for="Lastname_kz" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="Sex_ID" class="control-label">Жынысы</label>
+                <label for="UserName" class="control-label">ЖСН:</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Sex_ID" class="control-label">ЖЫНЫСЫ:</label>
                 <select asp-for="Sex_ID" class="form-control" asp-items="ViewBag.Sex"></select>
                 <span asp-validation-for="Sex_ID" class="text-danger"></span>
             </div>
              <div class="form-group">
-                <label for="Faculty_ID" class="control-label">Факультеті</label>
+                <label for="Faculty_ID" class="control-label">ФАКУЛЬТЕТІ:</label>
                 <select asp-for="Faculty_ID" class="form-control" asp-items="ViewBag.Faculty"></select>
                 <span asp-validation-for="Faculty_ID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="Department_ID" class="control-label">Кафедрасы</label>
+                <label for="Department_ID" class="control-label">КАФЕДРАСЫ:</label>
                 <select asp-for="Department_ID" class="form-control" asp-items="ViewBag.Department"></select>
                 <span asp-validation-for="Department_ID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="Address" class="control-label">Кампус</label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Rank_ID" class="control-label">Ғылыми атағы</label>
-                <select asp-for="Rank_ID" class="form-control" asp-items="ViewBag.Rank"></select>
-                <span asp-validation-for="Rank_ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Degree_ID" class="control-label">Ғылыми дәрежесі</label>
+                <label for="Degree_ID" class="control-label">ҒЫЛЫМИ ДӘРЕЖЕСІ:</label>
                 <select asp-for="Degree_ID" class="form-control" asp-items="ViewBag.degree"></select>
                 <span asp-validation-for="Degree_ID" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label for="UserName" class="control-label">ЖСН</label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
+                <label for="Rank_ID" class="control-label">ҒЫЛЫМИ АТАҒЫ:</label>
+                <select asp-for="Rank_ID" class="form-control" asp-items="ViewBag.Rank"></select>
+                <span asp-validation-for="Rank_ID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="Email" class="control-label">Электронды поштасы</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label for="Address" class="control-label">МЕКЕН:ЖАЙЫ:</label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label for="PhoneNumber" class="control-label">Телефоны</label>
+                <label for="PhoneNumber" class="control-label">ТЕЛЕФОНЫ:</label>
                 <input asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Сақтау" class="btn btn-primary" />
+                <label for="Email" class="control-label">КОРПОРАТИВТІ ПОШТАСЫ:</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="САҚТАУ" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Details" asp-route-id="@Model.Id">Өз профиліңізге өту</a>
+    <a asp-action="Details" asp-route-id="@Model.Id">ПРОФИЛЬГЕ ҚАЙТУ</a>
 </div>
 
 @section Scripts {
