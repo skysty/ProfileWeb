@@ -2,7 +2,8 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
+<header class="p-30 bgc-darkRed">
+    <div class="flex flex-end flex-y-center">
     @if (SignInManager.IsSignedIn(User))
     {
         @*<li class="nav-item" style="align-self: center;">
@@ -11,19 +12,14 @@
                 <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
             }
         </li>*@
-        <li class="nav-item">
-            <a class="nav-link text-white" >@User.Identity.Name</a>
-        </li>
-        <li class="nav-item">
-            <form class="nav-link text-white" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Profile", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-white">ЖҮЙЕДЕН ШЫҒУ</button>
+            <p class="mr-30 c-white">@User.Identity.Name</p>
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Profile", new { area = "" })">
+                <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">ЖҮЙЕДЕН ШЫҒУ</button>
             </form>
-        </li>
     }
     else
     {
-        <li class="nav-item">
-            <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">ЖҮЙЕГЕ КІРУ</a>
-        </li>
+        <a class="py-5 px-10 c-white br-5 bgc-darkBlue fs-15" asp-area="Identity" asp-page="/Account/Login">ЖҮЙЕГЕ КІРУ</a>
     }
-</ul>
+    </div>
+</header>
