@@ -10,8 +10,8 @@ using ProfileWeb.Data;
 namespace ProfileWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220122133506_initWd")]
-    partial class initWd
+    [Migration("20220130120437_initW")]
+    partial class initW
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -643,7 +643,7 @@ namespace ProfileWeb.Migrations
             modelBuilder.Entity("ProfileWeb.Models.Workway", b =>
                 {
                     b.HasOne("ProfileWeb.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("WorkWays")
+                        .WithMany("Workways")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

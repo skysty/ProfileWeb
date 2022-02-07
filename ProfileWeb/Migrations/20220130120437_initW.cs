@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ProfileWeb.Migrations
 {
-    public partial class initWd : Migration
+    public partial class initW : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

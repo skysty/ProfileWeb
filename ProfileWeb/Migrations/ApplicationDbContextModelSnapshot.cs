@@ -641,7 +641,7 @@ namespace ProfileWeb.Migrations
             modelBuilder.Entity("ProfileWeb.Models.Workway", b =>
                 {
                     b.HasOne("ProfileWeb.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("WorkWays")
+                        .WithMany("Workways")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

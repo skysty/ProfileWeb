@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProfileWeb.Models
@@ -17,6 +18,6 @@ namespace ProfileWeb.Models
         public string EN_Work { get; set; }
         [ForeignKey("ApplicationUser")]//very important
         public int Id { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; private set; } //very important
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

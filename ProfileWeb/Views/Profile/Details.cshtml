@@ -1,22 +1,25 @@
-﻿@model ProfileWeb.Models.ApplicationUser
+﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser>
 
 @{
     ViewData["Title"] = "ОПҚ ПРОФИЛІ";
 }
 
 <h1>ОПҚ ПРОФИЛІ</h1>
-<div>
+@*<div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Түзету</a> |
     <a asp-action="EditProfile" asp-route-id="@Model.Id">Зерттеу жұмыстарын қосу</a> |
     <a asp-action="EditQu" asp-route-id="@Model.Id">Біліктілікті жетілдіру</a> |
     <a asp-action="EditWork" asp-route-id="@Model.Id">Еңбек жолы</a> |
      <a asp-action="EditAchive" asp-route-id="@Model.Id">Жетістіктер</a> |
-</div>
-<div class="container-2">
+</div>*@
+@foreach (var item in Model)
+{
+    <div class="container-2">
+         <p><a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
       <div class="left">
-        @if (Model.PhotoUrl != null)
+        @if (item.PhotoUrl != null)
                              {
-                                 <img class="portrait" src="~/images/@Model.PhotoUrl" alt="">
+                                 <img class="portrait" src="~/images/@item.PhotoUrl" alt="">
                              }
                              else
                              {
@@ -27,97 +30,106 @@
    
         <div class="right">
             <p class="first">АТЫ-ЖӨНІ:</p>
-                    <p class="sql">@Html.DisplayFor(model => model.Firstname_kz)  @Html.DisplayFor(model => model.Middlename_kz) @Html.DisplayFor(model => model.Lastname_kz)</p>
+                    <p class="sql">@Html.DisplayFor(modelItem => item.Firstname_kz)  @Html.DisplayFor(modelItem => item.Middlename_kz) @Html.DisplayFor(modelItem => item.Lastname_kz)</p>
                     <p>ҚҰРЫЛЫМЫ (БӨЛІМІ, ФАКУЛЬТЕТІ, КАФЕДРАСЫ):</p>
-                    <p class="sql">@Html.DisplayFor(model => model.Faculties.KZ_AD)
-                        <br>@Html.DisplayFor(model => model.Kafedra.KZ_AD)</p>
+                    <p class="sql">@Html.DisplayFor(modelItem => item.Faculties.KZ_AD)
+                        <br>@Html.DisplayFor(modelItem => item.Kafedra.KZ_AD)</p>
                     <p>ҚЫЗМЕТІ (ҒЫЛЫМИ ДӘРЕЖЕСІ, АТАҒЫ):</p>
-                    <p class="sql">@Html.DisplayFor(model => model.Degree.TR_AD)
-                        <br>@Html.DisplayFor(model => model.Ranks.TR_AD)
+                    <p class="sql">@Html.DisplayFor(modelItem => item.Degree.TR_AD)
+                        <br>@Html.DisplayFor(modelItem => item.Ranks.TR_AD)
                     </p>
                     <p>МЕКЕН-ЖАЙЫ:</p>
-                    <p class="sql">@Html.DisplayFor(model => model.Address)</p>
+                    <p class="sql">@Html.DisplayFor(modelItem => item.Address)</p>
                     <p>ТЕЛЕФОНЫ:</p>
-                    <p class="sql">@Html.DisplayFor(model => model.PhoneNumber)</p>
+                    <p class="sql">@Html.DisplayFor(modelItem => item.PhoneNumber)</p>
                     <p>КОРПОРАТИВТІ ПОШТАСЫ:</p>
-                    <p class="sql last">@Html.DisplayFor(model => model.Email)</p>
+                    <p class="sql last">@Html.DisplayFor(modelItem => item.Email)</p>
         </div>
+        
 </div>
- <div class="container-3">
-                
-                <p>ЗЕРТТЕУ ЖҰМЫСТАРЫ, ЖАРИЯЛАНЫМДАРЫ (ПРИОРИТЕТТІ БАҒЫТТАРЫ):</p>
+}
+
+          <div class="container-3">
+           @foreach (var item in Model){
+                <p>ЗЕРТТЕУ ЖҰМЫСТАРЫ, ЖАРИЯЛАНЫМДАРЫ (ПРИОРИТЕТТІ БАҒЫТТАРЫ)<a asp-action="ListFolder" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
+                 }
                 <p>
                         <button id="toggleIcon1" onclick="toggle1()">&gt;</button>
                 </p>
                 <p id="sql1" class="sql toggle">
-                    @for(int i=0; i<Model.Researches.Count; i++)
+                    @foreach (var item in Model)
                     {
-                        @if (Model.Researches[i].KZ_Title != null && @Model.Researches[i].FileUrl != null)
-                        {
-                            <a  href="~/documents/@Model.Researches[i].FileUrl"  target="_blank">@Model.Researches[i].KZ_Title</a><br>
-                        }
-                        else
-                        {
-                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
-                        }
-                    }
-    
-                 </p>
-                <p>ЖЕТІСТІКТЕРІ:</p>
-                <p>
+                         @foreach (var res in item.Researches)
+                            {
+                                @if (res.KZ_Title != null)
+                                {
+
+                                    @Html.DisplayFor(modelItem => res.KZ_Title)   <a  href="~/documents/@res.FileUrl"  target="_blank" asp-append-version="true">ТОЛЫҒЫРАҚ</a><br>
+                                }else{
+                                     <a href="#">Деректер жоқ</a><br>
+                                }
+                            }
+                    }  
+                </p>
+                 @foreach (var item in Model){
+                <p>ЖЕТІСТІКТЕРІ<a asp-action="ListAchieve" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
+                 }
+                 <p>
                     <button id="toggleIcon2" onclick="toggle2()">&gt;</button>
                 </p>
-                <p id="sql2" class="sql toggle"> 
-                   @for(int i=0; i<Model.Achievements.Count; i++)
-                    {
-                        @if (Model.Achievements[i].KZ_Topic != null)
-                        {
-                            @Html.DisplayFor(model => Model.Achievements[i].KZ_Topic)<br>
-                        }
-                        else
-                        {
+                <p id="sql2" class="sql toggle">@foreach (var item in Model){
+                    @foreach (var achievement in item.Achievements)
+                            {
+                                @if (achievement.KZ_Topic != null)
+                                {
 
-                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
-                        }
-                    }
-                </p>
-                <p>ЕҢБЕК ЖОЛЫ:</p>
+                                    @Html.DisplayFor(modelItem => achievement.KZ_Topic)<br>
+                                }else{
+                                      <a href="#">Деректер жоқ</a><br>
+                                }
+                            }
+                    }   
+                </p> 
+                
+              
+                @foreach (var item in Model){
+                <p>ЕҢБЕК ЖОЛЫ<a asp-action="ListWork" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
+                 }
                 <p>
                     <button id="toggleIcon3" onclick="toggle3()">&gt;</button>
                 </p>
-                <p id="sql3" class="sql toggle"> 
-                    @for(int i=0; i<Model.WorkWays.Count; i++)
-                    {
-                        @if (Model.WorkWays[i].KZ_Work != null)
-                        {
-                            @Html.DisplayFor(model => Model.WorkWays[i].KZ_Work)<br>
-                        }
-                        else
-                        {
-
-                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
-                        }
-                    }
+                <p id="sql3" class="sql toggle">@foreach (var item in Model){
+                    @foreach (var workway in item.Workways)
+                            {
+                                @if (workway.KZ_Work != null)
+                                {
+                                    @Html.DisplayFor(modelItem => workway.KZ_Work)<br>
+                                }else{
+                                      <a href="#">Деректер жоқ</a><br>
+                                }
+                            }
+                    }   
                 </p>
-                <p>БІЛІКТІЛІКТІ ЖЕТІЛДІРУІ:</p>
+                @foreach (var item in Model){
+                <p>БІЛІКТІЛІКТІ ЖЕТІЛДІРУІ<a asp-action="ListQu" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
+                }
                 <p>
                     <button id="toggleIcon4" onclick="toggle4()">&gt;</button>
                 </p>
-                <p id="sql4" class="sql toggle"> 
-                    @for(int i=0; i<Model.Qulifications.Count; i++)
-                    {
-                        @if (Model.Qulifications[i].KZ_Qu != null)
-                        {
-                            @Html.DisplayFor(model => Model.Qulifications[i].KZ_Qu)<br>
-                        }
-                        else
-                        {
+                <p id="sql4" class="sql toggle"> @foreach (var item in Model){
+                    @foreach (var qulification in item.Qulifications)
+                            {
+                                @if (qulification.KZ_Qu != null)
+                                {
 
-                            <a  href="#"  target="_blank">ДЕРЕКТЕР ЖОҚ</a><br>
-                        }
-                    }
+                                    @Html.DisplayFor(modelItem => qulification.KZ_Qu)<br>
+                                }else{
+                                      <a href="#">Деректер жоқ</a><br>
+                                }
+                            }
+                    }   
                 </p>
-            </div>
+          </div>
         <script>
         function toggle1() {
             var x = document.getElementById("sql1");

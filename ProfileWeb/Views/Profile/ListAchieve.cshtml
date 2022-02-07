@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Жетістіктер";
+}
+
+<h1>Жетістіктер</h1>
+@foreach (var item1 in Model) {
+<p>
+    <a asp-action="CreateAchieve" asp-route-id="@item1.Id">Жаңа жетістіктерді  қосу</a>
+</p>
+}
+<table class="table">
+    <thead>
+        <tr>
+           <th>Жетістіктер</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            @foreach(var itemi in item.Achievements){
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => itemi.KZ_Topic)
+            </td>
+            <td>
+                <a asp-action="EditAchieve" asp-route-id="@itemi.Topic_Id">Түзету</a> |
+                <a asp-action="DeleteAchieve" asp-route-id="@itemi.Topic_Id">Жою</a>
+            </td>
+        </tr> 
+            }
+           
+}
+    </tbody>
+</table>
+@foreach (var item1 in Model) {
+<p>
+    <a asp-action="Details" asp-route-id="@item1.Id"> Профильге қайту</a>
+</p>
+}

@@ -1,0 +1,30 @@
+﻿@model ProfileWeb.ViewModel.ResearchViewModel
+@{
+    ViewData["Title"] = "Жою";
+}
+
+<h1>Өшіру</h1>
+<div class="alert alert-danger">
+<h3>Мұны шынымен жойғыңыз келе ме?</h3>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h3 class="text-uppercase">Мақаланы жою</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Model.KZ_Title
+            </dt>
+
+           <dd class="col-sm-10">
+                <a class="btn btn-primary" href="~/documents/@Model.ExistingDoc"  target="_blank" asp-append-version="true">Толығырақ</a>
+            </dd>
+        </dl>
+        <form asp-action="DeleteProfile">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-sm btn-danger rounded-0"><i class="fa fa-trash-alt"></i> Иә</button>
+            <a asp-action="Index"  class="btn btn-sm btn-primary rounded-0"><i class="fas fa-fast-backward"></i>Жоқ</a>
+        </form>
+    </div>
+</div>

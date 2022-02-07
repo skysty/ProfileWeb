@@ -1,0 +1,33 @@
+﻿@model ProfileWeb.ViewModel.AchievementViewModel
+
+@{
+    ViewData["Title"] = "Жаңа жетістіктерді қосу";
+}
+
+<h1>Жаңа жетістіктерді қосу</h1>
+
+
+<hr />
+<div class="card-body">
+    <div class="col-md-6">
+        <form asp-action="CreateAchieve" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="KZ_Qu" class="control-label"></label>
+                <input asp-for="KZ_Topic" class="form-control" />
+                <span asp-validation-for="KZ_Topic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сақтау" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Артқа</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

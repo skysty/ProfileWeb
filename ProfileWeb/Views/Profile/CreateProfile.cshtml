@@ -1,0 +1,49 @@
+﻿@model ProfileWeb.ViewModel.ResearchViewModel
+
+@{
+    ViewData["Title"] = "Жаңа ғылыми жұмыс салу";
+}
+
+<h1>Жаңа ғылыми жұмыс салу</h1>
+
+
+<hr />
+<div class="card-body">
+    <div class="col-md-6">
+        <form asp-action="CreateProfile" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="KZ_Title" class="control-label"></label>
+                <input asp-for="KZ_Title" class="form-control" />
+                <span asp-validation-for="KZ_Title" class="text-danger"></span>
+            </div>
+           <div class="form-group">
+                        <label for="Document" class="control-label">Документ</label>
+                        <div class="custom-file">
+                            <input asp-for="Document" accept=".pdf" class="custom-file-input" />
+                            <label class="custom-file-label" for="customFile">Файл таңдау</label>
+                        </div>
+                        <span asp-validation-for="Document" class="text-danger"></span>
+                    </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Сақтау" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Артқа</a>
+</div>
+
+@section Scripts {
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,32 @@
+﻿@model ProfileWeb.ViewModel.WorkwayViewModel
+
+@{
+    ViewData["Title"] = "Еңбек жолын жылдар бойынша қосу";
+}
+
+<h1>Еңбек жолын жылдар бойынша қосу</h1>
+
+
+<hr />
+<div class="card-body">
+    <div class="col-md-6">
+        <form asp-action="CreateWork" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="KZ_Work" class="form-control" />
+                <span asp-validation-for="KZ_Work" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сақтау" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Артқа</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

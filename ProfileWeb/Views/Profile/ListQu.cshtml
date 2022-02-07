@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Біліктіліктер";
+}
+
+<h1>Біліктіліктер</h1>
+@foreach (var item1 in Model) {
+<p>
+    <a asp-action="CreateQu" asp-route-id="@item1.Id">Біліктілікті қосу</a>
+</p>
+}
+<table class="table">
+    <thead>
+        <tr>
+           <th>БІЛІКТІЛІКТІ ЖЕТІЛДІРУ</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            @foreach(var itemi in item.Qulifications){
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => itemi.KZ_Qu)
+            </td>
+            <td>
+                <a asp-action="EditQu" asp-route-id="@itemi.Qu_Id">Түзету</a> |
+                <a asp-action="DeleteQu" asp-route-id="@itemi.Qu_Id">Жою</a>
+            </td>
+        </tr> 
+            }
+           
+}
+    </tbody>
+</table>
+@foreach (var item1 in Model) {
+<div>
+    <a asp-action="Details" asp-route-id="@item1.Id"> Профильге қайту</a>
+</div>
+}

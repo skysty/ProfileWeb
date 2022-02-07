@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProfileWeb.Data;
 using ProfileWeb.Models;
+using ProfileWeb.ViewModel;
 
 namespace ProfileWeb.Controllers
 {
@@ -25,7 +27,7 @@ namespace ProfileWeb.Controllers
             _userManager = userManager;
             _webHost = webHost;
         }
-
+        #region user
         // GET: Profile
         public async Task<IActionResult> Index()
         {
@@ -56,9 +58,9 @@ namespace ProfileWeb.Controllers
                 .Include(a => a.Qulifications)
                 .Include(d => d.Researches)
                 .Include(c => c.Achievements)
-                .Include(e => e.WorkWays)
+                .Include(e => e.Workways)
                 .Where(a => a.Id == id)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
             if (applicationUser == null)
             {
                 return NotFound();
@@ -67,37 +69,37 @@ namespace ProfileWeb.Controllers
             return View(applicationUser);
         }
 
-        // GET: Profile/Create
-        public IActionResult Create()
-        {
-            ViewData["Degree_ID"] = new SelectList(_context.Degrees, "Degree_ID", "Degree_ID");
-            ViewData["Faculty_ID"] = new SelectList(_context.Faculties, "ID", "ID");
-            ViewData["Department_ID"] = new SelectList(_context.Kafedras, "ID", "ID");
-            ViewData["Rank_ID"] = new SelectList(_context.Ranks, "Rank_ID", "Rank_ID");
-            ViewData["Sex_ID"] = new SelectList(_context.Sexes, "Sex_ID", "Sex_ID");
-            return View();
-        }
+        //// GET: Profile/Create
+        //public IActionResult Create()
+        //{
+        //    ViewData["Degree_ID"] = new SelectList(_context.Degrees, "Degree_ID", "Degree_ID");
+        //    ViewData["Faculty_ID"] = new SelectList(_context.Faculties, "ID", "ID");
+        //    ViewData["Department_ID"] = new SelectList(_context.Kafedras, "ID", "ID");
+        //    ViewData["Rank_ID"] = new SelectList(_context.Ranks, "Rank_ID", "Rank_ID");
+        //    ViewData["Sex_ID"] = new SelectList(_context.Sexes, "Sex_ID", "Sex_ID");
+        //    return View();
+        //}
 
-        // POST: Profile/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Firstname_kz,Lastname_kz,Middlename_kz,Firstname_ru,Lastname_ru,Middlename_ru,Firstname_en,Lastname_en,Middlename_en,Firstname_tr,Lastname_tr,Middlename_tr,UsernameChangeLimit,PhotoUrl,Sex_ID,Department_ID,Faculty_ID,Rank_ID,Address,BirthDate,Degree_ID,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(applicationUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["Degree_ID"] = new SelectList(_context.Degrees, "Degree_ID", "Degree_ID", applicationUser.Degree_ID);
-            ViewData["Faculty_ID"] = new SelectList(_context.Faculties, "ID", "ID", applicationUser.Faculty_ID);
-            ViewData["Department_ID"] = new SelectList(_context.Kafedras, "ID", "ID", applicationUser.Department_ID);
-            ViewData["Rank_ID"] = new SelectList(_context.Ranks, "Rank_ID", "Rank_ID", applicationUser.Rank_ID);
-            ViewData["Sex_ID"] = new SelectList(_context.Sexes, "Sex_ID", "Sex_ID", applicationUser.Sex_ID);
-            return View(applicationUser);
-        }
+        //// POST: Profile/Create
+        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Firstname_kz,Lastname_kz,Middlename_kz,Firstname_ru,Lastname_ru,Middlename_ru,Firstname_en,Lastname_en,Middlename_en,Firstname_tr,Lastname_tr,Middlename_tr,UsernameChangeLimit,PhotoUrl,Sex_ID,Department_ID,Faculty_ID,Rank_ID,Address,BirthDate,Degree_ID,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(applicationUser);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    ViewData["Degree_ID"] = new SelectList(_context.Degrees, "Degree_ID", "Degree_ID", applicationUser.Degree_ID);
+        //    ViewData["Faculty_ID"] = new SelectList(_context.Faculties, "ID", "ID", applicationUser.Faculty_ID);
+        //    ViewData["Department_ID"] = new SelectList(_context.Kafedras, "ID", "ID", applicationUser.Department_ID);
+        //    ViewData["Rank_ID"] = new SelectList(_context.Ranks, "Rank_ID", "Rank_ID", applicationUser.Rank_ID);
+        //    ViewData["Sex_ID"] = new SelectList(_context.Sexes, "Sex_ID", "Sex_ID", applicationUser.Sex_ID);
+        //    return View(applicationUser);
+        //}
 
         // GET: Profile/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -128,6 +130,7 @@ namespace ProfileWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ApplicationUser applicationUser)
         {
+            
             var userInfo = await _context.ApplicationUsers.FirstOrDefaultAsync(c => c.Id == applicationUser.Id);
             if (userInfo == null)
             {
@@ -141,8 +144,13 @@ namespace ProfileWeb.Controllers
             userInfo.PhoneNumber = applicationUser.PhoneNumber;
             userInfo.Email = applicationUser.Email;
             userInfo.Rank_ID = applicationUser.Rank_ID;
-            string uniqueFileName = GetUploadedFileName(applicationUser);
-            userInfo.PhotoUrl = uniqueFileName;
+            userInfo.Address = applicationUser.Address;
+            if (applicationUser.ProfilePhoto != null)
+            {
+                string uniqueFileName = GetUploadedFileName(applicationUser);
+                userInfo.PhotoUrl = uniqueFileName;
+            }
+            
             var result = await _userManager.UpdateAsync(userInfo);
             if (result.Succeeded)
             {
@@ -191,125 +199,6 @@ namespace ProfileWeb.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool ApplicationUserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EditProfile(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var applicationUser = await _context.ApplicationUsers
-                .Include(d => d.Researches)
-                .Where(c => c.Id == id).FirstOrDefaultAsync();
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-          
-            applicationUser.Researches.Add(new Research() { Res_Id = 1 });
-            //applicationUser.Researches.Add(new Research() { Res_Id = 2 });
-            return View(applicationUser);
-        }
-        [HttpPost]
-        public async Task<IActionResult> EditProfile(ApplicationUser applicant)
-        {
-            var userInfo = await _context.ApplicationUsers
-                .Include(d => d.Researches)
-                .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
-            if (userInfo == null)
-            {
-                return NotFound();
-            }
-          
-            userInfo.Researches = applicant.Researches;
-           
-
-
-         
-            //Research
-            //uniqueFileNames
-            List<string> uniqueFileNames = GetUploadedFileNames(applicant);
-            foreach (Research research in userInfo.Researches.ToList())
-            {
-                if ((research.KZ_Title == null || research.KZ_Title.Length == 0) &&
-                    (research.Document == null || research.Document.Length == 0))
-                
-                    userInfo.Researches.Remove(research);
-
-                foreach (string uniqueFileName in uniqueFileNames.ToList())
-                {   if (uniqueFileName == null)
-                    {
-                        uniqueFileNames.Remove(uniqueFileName);
-                        continue;
-                    }
-                    for (int i = 0; i < userInfo.Researches.Count; i++)
-                    {
-                        if (userInfo.Researches[i].FileUrl == null) {
-                            userInfo.Researches[i].FileUrl = uniqueFileName;
-                            
-                        }
-                        else if (uniqueFileName.Equals(userInfo.Researches[i].FileUrl))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
-
-            var result = await _userManager.UpdateAsync(userInfo);
-            if (result.Succeeded)
-            {
-                TempData["save"] = "User has been updated successfully";
-                return RedirectToAction(nameof(Details), new { id = applicant.Id });
-            }
-
-
-
-            return View(applicant);
-
-        }
-        
-        private List<string> GetUploadedFileNames(ApplicationUser applicant)
-        {
-            string filename = null;
-             var uniqueFileNames=new List<string>();
-
-            if (applicant.Researches != null)
-            {
-                foreach (var file in applicant.Researches)
-                {
-                    if (file.FileUrl != null|| file.Document==null)
-                    {
-                        filename = file.FileUrl;
-                        uniqueFileNames.Add(filename);
-                    }
-                    else
-                    {
-                        string uniq = null;
-                        string uploadsFolder = Path.Combine(_webHost.WebRootPath, "documents");
-                        uniq = Guid.NewGuid().ToString() + "_" + file.Document.FileName;
-                        uniqueFileNames.Add(uniq);
-                        string filePath = Path.Combine(uploadsFolder, uniq);
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            file.Document.CopyTo(fileStream);
-                        }
-                    }
-                }
-            }
-            return uniqueFileNames;
-        }
         private string GetUploadedFileName(ApplicationUser applicant)
         {
             string uniqueFileName = null;
@@ -342,9 +231,9 @@ namespace ProfileWeb.Controllers
                 .Include(a => a.Qulifications)
                 .Include(d => d.Researches)
                 .Include(c => c.Achievements)
-                .Include(e => e.WorkWays)
+                .Include(e => e.Workways)
                 .Where(a => a.Id == id)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
             if (applicationUser == null)
             {
                 return NotFound();
@@ -352,162 +241,493 @@ namespace ProfileWeb.Controllers
 
             return View(applicationUser);
         }
-        [HttpGet]
+        private bool ApplicationUserExists(int id)
+        {
+            return _context.Users.Any(e => e.Id == id);
+        }
+        #endregion user
+        #region research
+        public IActionResult CreateProfile() {
+            
+            return View();
+        }
+        [Route("Profile/ListFolder/{id:int:min(1)}", Name = "ListFolderRoute")]
+        public async Task<IActionResult> ListFolder(int? id)
+        {
+            return View( await _context.ApplicationUsers
+           .Include(a => a.Researches)
+           .Where(c => c.Id == id).ToListAsync());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateProfile(ResearchViewModel model, int? id)
+        {
+           
+            
+           var userInfo =  await _context.ApplicationUsers
+           .Include(a => a.Researches)
+           .Where(c => c.Id == id).FirstOrDefaultAsync();
+            string fileName = ProcessUploadedFile(model);
+            Research research = new Research()
+            {
+                ApplicationUser = userInfo,
+                FileUrl = fileName,
+                KZ_Title = model.KZ_Title
+            };
+            if (ModelState.IsValid)
+            {
+                _context.Add(research);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListFolder), new { id = userInfo.Id });
+                
+            }
+            return View(model);
+
+        }
+        public async Task<IActionResult> EditProfile(int? id) {
+            if (id == null) {
+                return NotFound();
+            }
+            var research = await _context.Researches.FindAsync(id);
+
+            var researhViewModel = new ResearchViewModel()
+            {
+                Id = research.Res_Id,
+                KZ_Title = research.KZ_Title,
+                ExistingDoc = research.FileUrl
+            };
+            if (research == null) { 
+                return NotFound();
+            }
+            return View(researhViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfile(int? id, ResearchViewModel model)
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            if (ModelState.IsValid)
+            {
+                var research = await _context.Researches.FindAsync(id);
+
+                research.KZ_Title = model.KZ_Title;
+                if (model.Document != null) {
+                    if (model.ExistingDoc != null) {
+                        string filePath = Path.Combine(_webHost.WebRootPath, FileLocation.FileUploadFolder, model.ExistingDoc);
+                        System.IO.File.Delete(filePath);
+                    }
+                    research.FileUrl = ProcessUploadedFile(model);
+                }
+                _context.Update(research);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListFolder), new { id = userId });
+            }
+
+            return View();
+        }
+        public async Task<IActionResult> DeleteProfile(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var research = await _context.Researches.FindAsync(id);
+
+            var researhViewModel = new ResearchViewModel()
+            {
+                Id = research.Res_Id,
+                KZ_Title = research.KZ_Title,
+                ExistingDoc = research.FileUrl
+                
+            };
+            if (research == null)
+            {
+                return NotFound();
+            }
+
+            return View(researhViewModel);
+        }
+        [HttpPost, ActionName("DeleteProfile")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteProfileConfirmed(int? id)
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var research = await _context.Researches.FindAsync(id);
+            var CurrentImage = Path.Combine(Directory.GetCurrentDirectory(), FileLocation.DeleteFileFromFolder, research.FileUrl);
+            _context.Researches.Remove(research);
+            if (System.IO.File.Exists(CurrentImage))
+            {
+                System.IO.File.Delete(CurrentImage);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ListFolder), new { id = userId });
+        }
+        private string ProcessUploadedFile(ResearchViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.Document != null)
+            {
+                string uploadsFolder = Path.Combine(_webHost.WebRootPath, FileLocation.FileUploadFolder);
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Document.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.Document.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+        #endregion research
+        #region qualification
+        [Route("Profile/ListQu/{id:int:min(1)}", Name = "ListQu")]
+        public async Task<IActionResult> ListQu(int? id)
+        {
+            return View(await _context.ApplicationUsers
+           .Include(a => a.Qulifications)
+           .Where(c => c.Id == id).ToListAsync());
+        }
+        public IActionResult CreateQu()
+        {
+
+            return View();
+        }
+        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateQu(QulificationViewModel  qmodel, int? id)
+        {
+
+
+            var userInfo = await _context.ApplicationUsers
+            .Include(a => a.Qulifications)
+            .Where(c => c.Id == id).FirstOrDefaultAsync();
+            var qu = new Qulification()
+            {
+                ApplicationUser = userInfo,
+                KZ_Qu = qmodel.KZ_Qu
+            };
+            if (ModelState.IsValid)
+            {
+                _context.Add(qu);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListQu), new { id = userInfo.Id });
+
+            }
+            return View(qmodel);
+
+        }
+
         public async Task<IActionResult> EditQu(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var qualification = await _context.Qulifications.FindAsync(id);
 
-            var applicationUser = await _context.ApplicationUsers
-                .Include(a => a.Qulifications)
-                .Where(c => c.Id == id).FirstOrDefaultAsync();
-            if (applicationUser == null)
+            var qu = new QulificationViewModel()
+            {
+                QuW_Id = qualification.Qu_Id,
+                KZ_Qu  = qualification.KZ_Qu
+            };
+            if (qualification == null)
             {
                 return NotFound();
             }
-            applicationUser.Qulifications.Add(new Qulification() { Qu_Id = 1 });
-            //applicationUser.Qulifications.Add(new Qulification() { Qu_Id = 2 });
-            return View(applicationUser);
+            return View(qu);
+        
         }
         [HttpPost]
-        public async Task<IActionResult> EditQu(ApplicationUser applicant)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditQu(int? id, QulificationViewModel qmodel)
         {
-            var userInfo = await _context.ApplicationUsers
-                .Include(a => a.Qulifications)
-                .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
-            if (userInfo == null)
+            var userId = _userManager.GetUserId(HttpContext.User);
+            if (ModelState.IsValid)
+            {
+                var qu = await _context.Qulifications.FindAsync(id);
+
+                qu.KZ_Qu = qmodel.KZ_Qu;
+               
+                _context.Update(qu);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListQu), new { id = userId });
+            }
+
+            return View();
+        }
+
+
+        public async Task<IActionResult> DeleteQu(int? id)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
-            userInfo.Qulifications = applicant.Qulifications;
 
+            var qulification = await _context.Qulifications.FindAsync(id);
 
-            //Qulification
-            foreach (Qulification qulification in userInfo.Qulifications.ToList())
+            var quW = new QulificationViewModel()
             {
-                if (qulification.KZ_Qu == null || qulification.KZ_Qu.Length == 0)
-                    userInfo.Qulifications.Remove(qulification);
-            }
-         
+                QuW_Id = qulification.Qu_Id,
+                KZ_Qu = qulification.KZ_Qu
 
-            var result = await _userManager.UpdateAsync(userInfo);
-            if (result.Succeeded)
+            };
+            if (qulification == null)
             {
-                TempData["save"] = "User has been updated successfully";
-                return RedirectToAction(nameof(Details), new { id = applicant.Id });
+                return NotFound();
             }
 
+            return View(quW);
+        }
+        [HttpPost, ActionName("DeleteQu")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteQuConfirmed(int? id)
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var qulification = await _context.Qulifications.FindAsync(id);
+           
+            _context.Qulifications.Remove(qulification);
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ListQu), new { id = userId });
+        }
+        #endregion qualification
+        #region wokway
+        [Route("Profile/ListWork/{id:int:min(1)}", Name = "ListWork")]
+        public async Task<IActionResult> ListWork(int? id)
+        {
+            return View(await _context.ApplicationUsers
+           .Include(a => a.Workways)
+           .Where(c => c.Id == id).ToListAsync());
+        }
+        public IActionResult CreateWork()
+        {
+
+            return View();
+        }
 
 
-            return View(applicant);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateWork(WorkwayViewModel wmodel, int? id)
+        {
+
+
+            var userInfo = await _context.ApplicationUsers
+            .Include(a => a.Workways)
+            .Where(c => c.Id == id).FirstOrDefaultAsync();
+            var workw = new Workway()
+            {
+                ApplicationUser = userInfo,
+                KZ_Work = wmodel.KZ_Work
+            };
+            if (ModelState.IsValid)
+            {
+                _context.Add(workw);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListWork), new { id = userInfo.Id });
+
+            }
+            return View(wmodel);
 
         }
-        [HttpGet]
+
         public async Task<IActionResult> EditWork(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
+            var workway = await _context.Workways.FindAsync(id);
 
-            var applicationUser = await _context.ApplicationUsers
-                .Include(e => e.WorkWays)
-                .Where(c => c.Id == id).FirstOrDefaultAsync();
-            if (applicationUser == null)
+            var wokrw = new WorkwayViewModel()
+            {
+                WorkW_Id = workway.Work_Id,
+                KZ_Work = workway.KZ_Work
+            };
+            if (workway == null)
             {
                 return NotFound();
             }
-            applicationUser.WorkWays.Add(new Workway() { Work_Id = 1 });
-            //applicationUser.WorkWays.Add(new Workway() { Work_Id = 2 });
-            return View(applicationUser);
+            return View(wokrw);
+
         }
         [HttpPost]
-        public async Task<IActionResult> EditWork(ApplicationUser applicant)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditWork(int? id, WorkwayViewModel wmodel)
         {
-            var userInfo = await _context.ApplicationUsers
-                .Include(e => e.WorkWays)
-                .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
-            if (userInfo == null)
+            var userId = _userManager.GetUserId(HttpContext.User);
+            if (ModelState.IsValid)
             {
-                return NotFound();
-            }
-           
-            userInfo.WorkWays = applicant.WorkWays;
+                var wokrway = await _context.Workways.FindAsync(id);
 
+                wokrway.KZ_Work = wmodel.KZ_Work;
 
-           
-            //Workway
-            foreach (Workway workway in userInfo.WorkWays.ToList())
-            {
-                if (workway.KZ_Work == null || workway.KZ_Work.Length == 0)
-                    userInfo.WorkWays.Remove(workway);
+                _context.Update(wokrway);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListWork), new { id = userId });
             }
 
-            var result = await _userManager.UpdateAsync(userInfo);
-            if (result.Succeeded)
-            {
-                TempData["save"] = "User has been updated successfully";
-                return RedirectToAction(nameof(Details), new { id = applicant.Id });
-            }
-
-
-
-            return View(applicant);
-
+            return View();
         }
-        [HttpGet]
-        public async Task<IActionResult> EditAchive(int? id)
+
+
+        public async Task<IActionResult> DeleteWork(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var applicationUser = await _context.ApplicationUsers
-                .Include(c => c.Achievements)
-                .Where(c => c.Id == id).FirstOrDefaultAsync();
-            if (applicationUser == null)
+            var workway = await _context.Workways.FindAsync(id);
+
+            var wokrw = new WorkwayViewModel()
+            {
+                WorkW_Id = workway.Work_Id,
+                KZ_Work  = workway.KZ_Work
+
+            };
+            if (workway == null)
             {
                 return NotFound();
             }
-            
-            applicationUser.Achievements.Add(new Achievement() { Topic_Id = 1 });
-            return View(applicationUser);
+
+            return View(wokrw);
+        }
+        [HttpPost, ActionName("DeleteWork")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteWorkConfirmed(int? id)
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var workway = await _context.Workways.FindAsync(id);
+
+            _context.Workways.Remove(workway);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ListWork), new { id = userId });
+        }
+        #endregion workway
+        #region achievment
+        [Route("Profile/ListAchieve/{id:int:min(1)}", Name = "ListAchieve")]
+        public async Task<IActionResult> ListAchieve(int? id)
+        {
+            return View(await _context.ApplicationUsers
+           .Include(a => a.Achievements)
+           .Where(c => c.Id == id).ToListAsync());
+        }
+        public IActionResult CreateAchieve()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAchieve(AchievementViewModel amodel, int? id)
+        {
+
+
+            var userInfo = await _context.ApplicationUsers
+            .Include(a => a.Achievements)
+            .Where(c => c.Id == id).FirstOrDefaultAsync();
+            var achieve = new Achievement()
+            {
+                ApplicationUser = userInfo,
+                KZ_Topic =amodel.KZ_Topic
+            };
+            if (ModelState.IsValid)
+            {
+                _context.Add(achieve);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListAchieve), new { id = userInfo.Id });
+
+            }
+            return View(amodel);
+
+        }
+
+        public async Task<IActionResult> EditAchieve(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var achievement = await _context.Achievements.FindAsync(id);
+
+            var amodel = new AchievementViewModel()
+            {
+                Ach_Id = achievement.Topic_Id,
+                KZ_Topic = achievement.KZ_Topic
+            };
+            if (achievement == null)
+            {
+                return NotFound();
+            }
+            return View(amodel);
+
         }
         [HttpPost]
-        public async Task<IActionResult> EditAchive(ApplicationUser applicant)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditAchieve(int? id, AchievementViewModel amodel)
         {
-            var userInfo = await _context.ApplicationUsers
-                .Include(c => c.Achievements)
-                .Where(c => c.Id == applicant.Id).FirstOrDefaultAsync();
-            if (userInfo == null)
+            var userId = _userManager.GetUserId(HttpContext.User);
+            if (ModelState.IsValid)
+            {
+                var achievement = await _context.Achievements.FindAsync(id);
+
+                achievement.KZ_Topic = amodel.KZ_Topic;
+
+                _context.Update(achievement);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(ListAchieve), new { id = userId });
+            }
+
+            return View();
+        }
+
+
+        public async Task<IActionResult> DeleteAchieve(int? id)
+        {
+            if (id == null)
             {
                 return NotFound();
             }
-            
-            userInfo.Achievements = applicant.Achievements;
 
+            var achievement = await _context.Achievements.FindAsync(id);
 
-          
-            //Achievement
-            foreach (Achievement achievement in userInfo.Achievements.ToList())
+            var amodel = new AchievementViewModel()
             {
-                if (achievement.KZ_Topic == null || achievement.KZ_Topic.Length == 0)
-                    userInfo.Achievements.Remove(achievement);
-            }
-            var result = await _userManager.UpdateAsync(userInfo);
-            if (result.Succeeded)
+                Ach_Id = achievement.Topic_Id,
+                KZ_Topic = achievement.KZ_Topic
+ 
+            };
+            if (achievement == null)
             {
-                TempData["save"] = "User has been updated successfully";
-                return RedirectToAction(nameof(Details), new { id = applicant.Id });
+                return NotFound();
             }
 
-
-
-            return View(applicant);
-
+            return View(amodel);
         }
+        [HttpPost, ActionName("DeleteAchieve")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAchieveConfirmed(int? id)
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var achievement = await _context.Achievements.FindAsync(id);
+
+            _context.Achievements.Remove(achievement);
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(ListAchieve), new { id = userId });
+        }
+        #endregion achievment
+
+
     }
 }

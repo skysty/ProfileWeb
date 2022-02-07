@@ -1,120 +1,37 @@
-﻿@model ProfileWeb.Models.ApplicationUser
+﻿@model ProfileWeb.ViewModel.WorkwayViewModel
 
 @{
-    ViewData["Title"] = "ЕҢБЕК ЖОЛЫ";
+    ViewData["Title"] = "Еңбек жолын өзгерту ";
 }
 
 <h1></h1>
 
-<h4>ЕҢБЕК ЖОЛЫ</h4>
+<h4>Еңбек жолын өзгерту </h4>
 <hr />
-<div class="row">
-    <div class="col-md-6 col-md-offset-2">
-        <form asp-action="EditWork" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-           @*exp2*@
-        <div class="col-md-12">
-            <table id="exp2" class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            ЕҢБЕК ЖОЛЫ:
-                        </th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.WorkWays.Count; i++)
-                    {
-                        <tr>
-                            <td>
-                                @if (@Model.WorkWays[i].KZ_Work != null)
-                                {
-                                     <input asp-for="@Model.WorkWays[i].KZ_Work" class="form-control" readonly/>
-                                }
-                                else
-                                {
-                                    <input asp-for="@Model.WorkWays[i].KZ_Work" class="form-control" />
-                                }
-                            </td>
-                            <td>
-                                <button id="btnadd2-@i" type="button" class="btn btn-secondary visible"
-                                        onclick="AddItem3(this)">
-                                    ҚОСУ
-                                </button>
-                            </td>
-                            <td>
-                                <button id="btnremove2-@i" type="button" class="btn btn-danger invisible"
-                                        onclick="DeleteItem3(this)">
-                                    ЖОЮ
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            @*exp2*@
-            <input type="hidden" id="LIndex" value="@(Model.WorkWays?.Count != null ? Model.WorkWays.Count-1 : 0)" />
-        </div>
+<div class="card">
+    <div class="card-header">
+        <h3 class="text-uppercase">Еңбек жолын өзгерту</h3>
+    </div>
+    <div class="card-body">
+        <form asp-action="EditWork" enctype="multipart/form-data">
+            <input type="hidden" asp-for="WorkW_Id" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input asp-for="KZ_Work" class="form-control" />
+                        <span asp-validation-for="KZ_Work" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
             <div class="form-group">
-                <input type="submit" value="САҚТАУ" class="btn btn-primary" />
+                <button type="submit" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i> ӨЗГЕРТУ</button>
+               <a asp-action="Index" class="btn btn-sm btn-primary rounded-0"><i class="fas fa-fast-backward"></i> Профильге қайту</a>
+                
             </div>
         </form>
     </div>
 </div>
 
-<div>
-     <a asp-action="Details" asp-route-id="@Model.Id">ПРОФИЛЬГЕ ҚАЙТУ</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-<script type="text/javascript">
-    
-
-
-   
-
-    //exp2
-    function DeleteItem3(btn) {
-        $(btn).closest('tr').remove();
-    }
-    function AddItem3(btn) {
-
-        var table = document.getElementById('exp2');
-        var rows = table.getElementsByTagName('tr');
-
-        var rowOuterHtml = rows[rows.length - 1].outerHTML;
-
-        var lastrowIdx = document.getElementById('LIndex').value;
-
-        var nextrowIdx = eval(lastrowIdx) + 1;
-
-        document.getElementById('LIndex').value = nextrowIdx;
-
-        rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
-        rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
-        rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
-
-
-        var newRow = table.insertRow();
-        newRow.innerHTML = rowOuterHtml;
-
-
-
-        var btnAddID = btn.id;
-        var btnDeleteid = btnAddID.replaceAll('btnadd2', 'btnremove2');
-
-        var delbtn = document.getElementById(btnDeleteid);
-        delbtn.classList.add("visible");
-        delbtn.classList.remove("invisible");
-
-
-        var addbtn = document.getElementById(btnAddID);
-        addbtn.classList.remove("visible");
-        addbtn.classList.add("invisible");
-
-    }
-</script>

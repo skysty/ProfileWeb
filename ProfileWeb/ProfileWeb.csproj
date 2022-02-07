@@ -31,10 +31,22 @@
     <Compile Remove="Migrations\20220118100404_initWD.Designer.cs" />
     <Compile Remove="Migrations\20220122132353_pk_res.cs" />
     <Compile Remove="Migrations\20220122132353_pk_res.Designer.cs" />
+    <Compile Remove="Migrations\20220122133506_initWd.cs" />
+    <Compile Remove="Migrations\20220122133506_initWd.Designer.cs" />
     <Compile Remove="Migrations\20220124152025_ddd.cs" />
     <Compile Remove="Migrations\20220124152025_ddd.Designer.cs" />
     <Compile Remove="Migrations\20220124154124_dddd.cs" />
     <Compile Remove="Migrations\20220124154124_dddd.Designer.cs" />
+    <Compile Remove="Migrations\20220128094419_Icollec.cs" />
+    <Compile Remove="Migrations\20220128094419_Icollec.Designer.cs" />
+    <Compile Remove="Migrations\20220128113021_icolecd.cs" />
+    <Compile Remove="Migrations\20220128113021_icolecd.Designer.cs" />
+    <Compile Remove="Migrations\20220130081651_initWd.cs" />
+    <Compile Remove="Migrations\20220130081651_initWd.Designer.cs" />
+    <Compile Remove="Migrations\20220130085046_initW.cs" />
+    <Compile Remove="Migrations\20220130085046_initW.Designer.cs" />
+    <Compile Remove="Migrations\20220130115730_intW.cs" />
+    <Compile Remove="Migrations\20220130115730_intW.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
