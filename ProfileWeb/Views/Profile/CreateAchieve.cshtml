@@ -1,32 +1,34 @@
 ﻿@model ProfileWeb.ViewModel.AchievementViewModel
 
 @{
-    ViewData["Title"] = "Жаңа жетістіктерді қосу";
+    ViewData["Title"] = "Жетістіктерді қосу | Ахмет Ясауи Университеті";
 }
 
-<h1>Жаңа жетістіктерді қосу</h1>
-
-
-<hr />
-<div class="card-body">
-    <div class="col-md-6">
+<main class="m-30">
+    <div class="flex flex-between p-30 br-5 bgc-lightGrey">
+        <div>
+            <a class="c-darkRed" href="">ОПҚ ТІЗІМІ</a>
+            /
+            <a class="c-darkGrey disabled" href="">ФИО</a>
+        </div>
+        <a class="c-darkRed" target="_blank" href="https://www.youtube.com/watch?v=-SbFWF5az1g">ВИДЕО НҰСҚАУЛЫҚ</a>
+    </div>
+    <div class="p-30">
+        <h3 class="d-inline-block mr-5 fs-17">ЖЕТІСТІКТЕРДІ ҚОСУ</h3>
+    </div>
+    <div class="p-30 br-5 bgc-lightGrey">
         <form asp-action="CreateAchieve" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label for="KZ_Qu" class="control-label"></label>
-                <input asp-for="KZ_Topic" class="form-control" />
-                <span asp-validation-for="KZ_Topic" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Сақтау" class="btn btn-primary" />
-            </div>
+            <div asp-validation-summary="ModelOnly" class="c-darkRed"></div>
+            <label class="d-block mb-5" for="KZ_Qu">ЖЕТІСТІГІ:</label>
+            <input class="d-block mb-10 p-5 br-5 w-full" type="text" asp-for="KZ_Topic"/>
+            <div asp-validation-for="KZ_Topic" class="c-darkRed"></div>
+            <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">САҚТАУ</button>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Артқа</a>
-</div>
+    <div class="pt-30 pl-30">
+        <a class="c-darkRed" asp-action="Index">ПОРТФОЛИОҒА ҚАЙТУ</a>
+    </div>
+</main>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
