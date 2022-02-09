@@ -1,110 +1,85 @@
 ﻿@model ProfileWeb.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "ОПҚ ПОРТФОЛИОСЫН ТҮЗЕТУ";
+    ViewData["Title"] = "Портфолио ақпаратын өзгерту | Ахмет Ясауи Университеті";
 }
 
-<h1></h1>
-
-<h4>ОПҚ ПОРТФОЛИОСЫН ТҮЗЕТУ</h4>
-<div class="row">
-    <div class="col-md-4">
+<main class="m-30">
+    <div class="flex flex-between p-30 br-5 bgc-lightGrey">
+        <div>
+            <a class="c-darkRed" href="">ОПҚ ТІЗІМІ</a>
+            /
+            <a class="c-darkGrey disabled" href="">ФИО</a>
+        </div>
+        <a class="c-darkRed" target="_blank" href="https://www.youtube.com/watch?v=-SbFWF5az1g">ВИДЕО НҰСҚАУЛЫҚ</a>
+    </div>
+    <div class="p-30">
+        <h3 class="fs-17">ПОРТФОЛИО АҚПАРАТЫН ӨЗГЕРТУ</h3>
+    </div>
+    <div class="p-30 br-5 bgc-lightGrey">
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
-            <h3>@ViewBag.message</h3>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="ProfilePhoto" style="width: 100%;">ФОТОСЫ</label>
-                             @if (Model.PhotoUrl != null)
-                             {
-                                 <img id="profilePicture" class="portrait"   src="~/images/@Model.PhotoUrl">
-                             }
-                             else
-                             {
-                                 <img id="profilePicture"  class="portrait"  src="~/photo/tps-img.png">
-                             }
-                            <input type="file"
-                                   asp-for="ProfilePhoto"
-                                   accept=".png,.jpg,.jpeg,.gif,.tif"
-                                   class="form-control"
-                                   style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
-                                   onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
-                           @* <span asp-validation-for="ProfilePhoto" class="text-danger"></span>*@
-                        </div>
-               </div>
+        <div asp-validation-summary="ModelOnly" class="c-darkRed"></div>
 
-            <div class="form-group">
-                <label for="Firstname_kz" class="control-label">АТЫ:</label>
-                <input asp-for="Firstname_kz" class="form-control" readonly/>
-                <span asp-validation-for="Firstname_kz" class="text-danger"></span>
+            <label class="d-block mb-5" for="ProfilePhoto">СУРЕТІ:</label>
+            <div class="mb-5">
+                @if (Model.PhotoUrl != null)
+                    {
+                        <img id="profilePicture" class="w-300 br-5 b-5 bc-darkRed" src="~/images/@Model.PhotoUrl" />
+                    }
+                    else
+                    {
+                        <img id="profilePicture" class="w-300 br-5 b-5 bc-darkRed" src="~/photo/tps-img.png" />
+                    }
             </div>
-           
-            <div class="form-group">
-                <label for="Middlename_kz" class="control-label">ӘКЕСІНІҢ АТЫ:</label>
-                <input asp-for="Middlename_kz" class="form-control" readonly/>
-                <span asp-validation-for="Middlename_kz" class="text-danger"></span>
-            </div>
-             <div class="form-group">
-                <label for="Lastname_kz" class="control-label">ТЕГІ:</label>
-                <input asp-for="Lastname_kz" class="form-control" readonly/>
-                <span asp-validation-for="Lastname_kz" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="UserName" class="control-label">ЖСН:</label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Sex_ID" class="control-label">ЖЫНЫСЫ:</label>
-                <select asp-for="Sex_ID" class="form-control" asp-items="ViewBag.Sex"></select>
-                <span asp-validation-for="Sex_ID" class="text-danger"></span>
-            </div>
-             <div class="form-group">
-                <label for="Faculty_ID" class="control-label">ФАКУЛЬТЕТІ:</label>
-                <select asp-for="Faculty_ID" class="form-control" asp-items="ViewBag.Faculty"></select>
-                <span asp-validation-for="Faculty_ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Department_ID" class="control-label">КАФЕДРАСЫ:</label>
-                <select asp-for="Department_ID" class="form-control" asp-items="ViewBag.Department"></select>
-                <span asp-validation-for="Department_ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Degree_ID" class="control-label">ҒЫЛЫМИ ДӘРЕЖЕСІ:</label>
-                <select asp-for="Degree_ID" class="form-control" asp-items="ViewBag.degree"></select>
-                <span asp-validation-for="Degree_ID" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label for="Rank_ID" class="control-label">ҒЫЛЫМИ АТАҒЫ:</label>
-                <select asp-for="Rank_ID" class="form-control" asp-items="ViewBag.Rank"></select>
-                <span asp-validation-for="Rank_ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Address" class="control-label">МЕКЕН:ЖАЙЫ:</label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="PhoneNumber" class="control-label">ТЕЛЕФОНЫ:</label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="Email" class="control-label">КОРПОРАТИВТІ ПОШТАСЫ:</label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="САҚТАУ" class="btn btn-primary" />
-            </div>
+            <input type="file" asp-for="ProfilePhoto" accept=".png,.jpg,.jpeg,.gif,.tif" class="d-block mb-10 p-5 br-5 w-300" onchange="document.getElementById('profilePicture').src = window.URL.createObjectURL(this.files[0])" />
+
+            <label class="d-block mb-5" for="Lastname_kz">ТЕГІ:</label>
+            <input class="d-block mb-10 p-5 br-5 w-500" type="text" asp-for="Lastname_kz" readonly />
+            <div asp-validation-for="Lastname_kz" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Firstname_kz">АТЫ:</label>
+            <input class="d-block mb-10 p-5 br-5 w-500" type="text" asp-for="Firstname_kz" readonly />
+            <div asp-validation-for="Firstname_kz" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Middlename_kz">ӘКЕСІНІҢ АТЫ:</label>
+            <input class="d-block mb-10 p-5 br-5 w-500" type="text" asp-for="Middlename_kz" readonly />
+            <div asp-validation-for="Middlename_kz" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Faculty_ID">ФАКУЛЬТЕТІ:</label>
+            <select class="d-block mb-10 p-5 br-5" asp-for="Faculty_ID" asp-items="ViewBag.Faculty"></select>
+            <div asp-validation-for="Faculty_ID" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Department_ID">КАФЕДРАСЫ:</label>
+            <select class="d-block mb-10 p-5 br-5" asp-for="Department_ID" asp-items="ViewBag.Department"></select>
+            <div asp-validation-for="Department_ID" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Degree_ID">ҒЫЛЫМИ ДӘРЕЖЕСІ:</label>
+            <select class="d-block mb-10 p-5 br-5" asp-for="Degree_ID" asp-items="ViewBag.degree"></select>
+            <div asp-validation-for="Degree_ID" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Rank_ID">ҒЫЛЫМИ АТАҒЫ:</label>
+            <select class="d-block mb-10 p-5 br-5" asp-for="Rank_ID" asp-items="ViewBag.Rank"></select>
+            <div asp-validation-for="Rank_ID" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Address">ЖҰМЫС МЕКЕН-ЖАЙЫ:</label>
+            <input class="d-block mb-10 p-5 br-5 w-500" type="text" asp-for="Address" />
+            <div asp-validation-for="Address" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="PhoneNumber">ЖҰМЫС ТЕЛЕФОНЫ:</label>
+            <input class="d-block mb-10 p-5 br-5 w-500" type="text" asp-for="PhoneNumber" />
+            <div asp-validation-for="PhoneNumber" class="c-darkRed"></div>
+
+            <label class="d-block mb-5" for="Email">КОРПОРАТИВТІ ПОШТАСЫ:</label>
+            <input class="d-block mb-15 p-5 br-5 w-500" type="text" asp-for="Email" />
+            <div asp-validation-for="Email" class="c-darkRed"></div>
+
+            <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">САҚТАУ</button>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Details" asp-route-id="@Model.Id">ПРОФИЛЬГЕ ҚАЙТУ</a>
-</div>
+    <div class="pt-30 pl-30">
+        <a class="c-darkRed" asp-action="Details" asp-route-id="@Model.Id">ПОРТФОЛИОҒА ҚАЙТУ</a>
+    </div>
+</main>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

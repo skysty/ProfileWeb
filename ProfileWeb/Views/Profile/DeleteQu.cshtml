@@ -1,26 +1,31 @@
 ﻿@model ProfileWeb.ViewModel.QulificationViewModel
+
 @{
-    ViewData["Title"] = "Жою";
+    ViewData["Title"] = "Біліктілікті жою | Ахмет Ясауи Университеті";
 }
 
-<h1>Өшіру</h1>
-<div class="alert alert-danger">
-<h3>Мұны шынымен жойғыңыз келе ме?</h3>
-</div>
-<div class="card">
-    <div class="card-header">
-        <h3 class="text-uppercase">Осы біліктілікті жою</h3>
+<main class="m-30">
+    <div class="flex flex-between p-30 br-5 bgc-lightGrey">
+        <div>
+            <a class="c-darkRed" href="">ОПҚ ТІЗІМІ</a>
+            /
+            <a class="c-darkGrey disabled" href="">ФИО</a>
+        </div>
+        <a class="c-darkRed" target="_blank" href="https://www.youtube.com/watch?v=-SbFWF5az1g">ВИДЕО НҰСҚАУЛЫҚ</a>
     </div>
-    <div class="card-body">
-        <dl class="row">
-           <dd class="col-sm-10">
-               @Html.DisplayFor(model => model.KZ_Qu)
-            </dd>
-        </dl>
+    <div class="p-30">
+        <h3 class="d-inline-block mr-5 fs-17 c-darkRed">БІЛІКТІЛІКТІ ЖОЮ</h3>
+    </div>
+    <div class="p-30 br-5 bgc-pink">
+        <div class="d-block mt-10 mb-15">
+            <h2 class="d-inline mr-5 fs-17 ff-body-regular c-darkRed">@Html.DisplayFor(model => model.KZ_Qu)</h2>
+        </div>
         <form asp-action="DeleteQu">
             <input type="hidden" asp-for="QuW_Id" />
-            <button type="submit" class="btn btn-sm btn-danger rounded-0"><i class="fa fa-trash-alt"></i> Иә</button>
-            <a asp-action="Index"  class="btn btn-sm btn-primary rounded-0"><i class="fas fa-fast-backward"></i>Жоқ</a>
+            <button class="d-block py-5 px-10 br-5 bgc-darkRed c-white" type="submit">ЖОЮ</button>
         </form>
     </div>
-</div>
+    <div class="pt-30 pl-30">
+        <a class="c-darkRed" asp-action="Index">ПОРТФОЛИОҒА ҚАЙТУ</a>
+    </div>
+</main>
