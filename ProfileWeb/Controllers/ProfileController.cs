@@ -356,11 +356,18 @@ namespace ProfileWeb.Controllers
         {
             var userId = _userManager.GetUserId(HttpContext.User);
             var research = await _context.Researches.FindAsync(id);
-            var CurrentImage = Path.Combine(Directory.GetCurrentDirectory(), FileLocation.DeleteFileFromFolder, research.FileUrl);
-            _context.Researches.Remove(research);
-            if (System.IO.File.Exists(CurrentImage))
+            if (research.FileUrl == null)
             {
-                System.IO.File.Delete(CurrentImage);
+                _context.Researches.Remove(research);
+            }
+            else
+            {
+                var CurrentImage = Path.Combine(Directory.GetCurrentDirectory(), FileLocation.DeleteFileFromFolder, research.FileUrl);
+                _context.Researches.Remove(research);
+                if (System.IO.File.Exists(CurrentImage))
+                {
+                    System.IO.File.Delete(CurrentImage);
+                }
             }
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(ListFolder), new { id = userId });
