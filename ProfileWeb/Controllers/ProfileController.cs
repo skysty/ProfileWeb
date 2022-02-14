@@ -69,37 +69,30 @@ namespace ProfileWeb.Controllers
             return View(applicationUser);
         }
 
-        //// GET: Profile/Create
-        //public IActionResult Create()
-        //{
-        //    ViewData["Degree_ID"] = new SelectList(_context.Degrees, "Degree_ID", "Degree_ID");
-        //    ViewData["Faculty_ID"] = new SelectList(_context.Faculties, "ID", "ID");
-        //    ViewData["Department_ID"] = new SelectList(_context.Kafedras, "ID", "ID");
-        //    ViewData["Rank_ID"] = new SelectList(_context.Ranks, "Rank_ID", "Rank_ID");
-        //    ViewData["Sex_ID"] = new SelectList(_context.Sexes, "Sex_ID", "Sex_ID");
-        //    return View();
-        //}
+        // GET: Profile/Create
+        public IActionResult Create()
+        {
+           
+            ViewData["Sex"] = new SelectList(_context.Sexes.ToList(), "Sex_ID", "Sex_KZ");
+            return View();
+        }
 
-        //// POST: Profile/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //// more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Firstname_kz,Lastname_kz,Middlename_kz,Firstname_ru,Lastname_ru,Middlename_ru,Firstname_en,Lastname_en,Middlename_en,Firstname_tr,Lastname_tr,Middlename_tr,UsernameChangeLimit,PhotoUrl,Sex_ID,Department_ID,Faculty_ID,Rank_ID,Address,BirthDate,Degree_ID,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(applicationUser);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["Degree_ID"] = new SelectList(_context.Degrees, "Degree_ID", "Degree_ID", applicationUser.Degree_ID);
-        //    ViewData["Faculty_ID"] = new SelectList(_context.Faculties, "ID", "ID", applicationUser.Faculty_ID);
-        //    ViewData["Department_ID"] = new SelectList(_context.Kafedras, "ID", "ID", applicationUser.Department_ID);
-        //    ViewData["Rank_ID"] = new SelectList(_context.Ranks, "Rank_ID", "Rank_ID", applicationUser.Rank_ID);
-        //    ViewData["Sex_ID"] = new SelectList(_context.Sexes, "Sex_ID", "Sex_ID", applicationUser.Sex_ID);
-        //    return View(applicationUser);
-        //}
+        // POST: Profile/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Firstname_kz,Lastname_kz,Middlename_kz,Firstname_ru,Lastname_ru,Middlename_ru,Firstname_en,Lastname_en,Middlename_en,Firstname_tr,Lastname_tr,Middlename_tr,Sex_ID,UserName,PasswordHash")] ApplicationUser applicationUser)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(applicationUser);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["Sex"] = new SelectList(_context.Sexes.ToList(), "Sex_ID", "Sex_KZ");
+            return View(applicationUser);
+        }
 
         // GET: Profile/Edit/5
         public async Task<IActionResult> Edit(int? id)
