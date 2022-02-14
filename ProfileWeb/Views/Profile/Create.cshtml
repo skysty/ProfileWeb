@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Портфолиоға жаңа пайдаланушы қосу";
 }
+
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 <h1>Портфолиоға жаңа пайдаланушы қосу</h1>
@@ -98,6 +99,8 @@
 <div>
     <a asp-action="Index">Артқа қайту</a>
 </div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

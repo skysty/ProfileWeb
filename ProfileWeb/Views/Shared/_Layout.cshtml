@@ -1,40 +1,23 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://cdn404.netlify.app/jquery.dataTables.min.css" />
-    <link rel="stylesheet" href="~/css/index.css" />
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-    <link rel="icon" type="image/x-icon" href="favicon.png">
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/js/jquery.dataTables.min.js"></script>
-    <script src="~/lib/js/jq.js"></script>
-</head>
-<body>
-     <div class="top">
-             <partial name="_LoginPartial" />
-        </div>
-        @*<header>
-            <a  asp-action="Index">ОПҚ ТІЗІМІ</a>
-        </header>*@
-
-   <div class="wrapper">
-        <div class="container-1"> 
-            <a asp-action="Index">ОПҚ ТІЗІМІ</a>  
-            <a href="https://youtu.be/-SbFWF5az1g" target="_blank">ВИДЕО НҰСҚАУЛЫҚ</a>
-        </div>
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer>
-            <a href="">АХМЕТ ЯСАУИ УНИВЕРСИТЕТІ</a>
-    </footer>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-</body>
+<html lang="kk">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"]</title>
+        <link rel="icon" type="image/x-icon" href="favicon.png">
+        <link rel="stylesheet" href="https://cdn404.netlify.app/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="~/css/index.css" />
+    </head>
+    <body>
+        <partial name="_LoginPartial" />
+        @RenderBody()
+        <footer class="flex flex-center p-30 bgc-darkBlue">
+            <p class="c-white">Ахмет Ясауи Университеті | 2022</p>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/js/jquery.dataTables.min.js"></script>
+        <script src="~/lib/js/jq.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>

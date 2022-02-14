@@ -4,22 +4,16 @@
 
 <header class="p-30 bgc-darkRed">
     <div class="flex flex-end flex-y-center">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        @*<li class="nav-item" style="align-self: center;">
-            @if (UserManager.GetUserAsync(User).Result.ProfilePicture != null)
-            {
-                <img style="width:40px;height:40px; object-fit:cover; border-radius:30px" src="data:image/*;base64,@(Convert.ToBase64String(UserManager.GetUserAsync(User).Result.ProfilePicture))">
-            }
-        </li>*@
-            <p class="mr-30 c-white">@User.Identity.Name</p>
-            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Profile", new { area = "" })">
-                <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">ЖҮЙЕДЕН ШЫҒУ</button>
-            </form>
-    }
-    else
-    {
+        @if (SignInManager.IsSignedIn(User))
+        {
+        <p class="mr-30 c-white">@User.Identity.Name</p>
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Profile", new { area = "" })">
+        <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">ЖҮЙЕДЕН ШЫҒУ</button>
+        </form>
+        }
+        else
+        {
         <a class="py-5 px-10 c-white br-5 bgc-darkBlue fs-15" asp-area="Identity" asp-page="/Account/Login">ЖҮЙЕГЕ КІРУ</a>
-    }
+        }
     </div>
 </header>
