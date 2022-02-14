@@ -1,36 +1,34 @@
 ﻿@model ProfileWeb.ViewModel.QulificationViewModel
 
 @{
-    ViewData["Title"] = "Біліктілікті өзгерту";
+    ViewData["Title"] = "Біліктілікті өзгерту | Ахмет Ясауи Университеті";
 }
 
-<h1></h1>
-
-<h4>Біліктілікті өзгерту </h4>
-<hr />
-<div class="card">
-    <div class="card-header">
-        <h3 class="text-uppercase">Біліктілікті өзгерту</h3>
+<main class="m-30">
+    <div class="flex flex-between p-30 br-5 bgc-lightGrey">
+        <div>
+            <a class="c-darkRed" href="">ОПҚ ТІЗІМІ</a>
+            /
+            <a class="c-darkGrey disabled" href="">ФИО</a>
+        </div>
+        <a class="c-darkRed" target="_blank" href="https://www.youtube.com/watch?v=-SbFWF5az1g">ВИДЕО НҰСҚАУЛЫҚ</a>
     </div>
-    <div class="card-body">
+    <div class="p-30">
+        <h3 class="d-inline-block mr-5 fs-17">БІЛІКТІЛІКТІ ӨЗГЕРТУ</h3>
+    </div>
+    <div class="p-30 br-5 bgc-lightGrey">
         <form asp-action="EditQu" enctype="multipart/form-data">
             <input type="hidden" asp-for="QuW_Id" />
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input asp-for="KZ_Qu" class="form-control" />
-                        <span asp-validation-for="KZ_Qu" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i> ӨЗГЕРТУ</button>
-                <a asp-action="Index" class="btn btn-sm btn-primary rounded-0"><i class="fas fa-fast-backward"></i> Профильге қайту</a>
-                
-            </div>
+            <label class="d-block mb-5" for="">БІЛІКТІЛІК:</label>
+            <input class="d-block mb-15 p-5 br-5 w-full" asp-for="KZ_Qu" />
+            <div asp-validation-for="KZ_Qu" class="c-darkRed"></div>
+            <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">ӨЗГЕРТУ</button>
         </form>
     </div>
-</div>
+    <div class="pt-30 pl-30">
+        <a class="c-darkRed" asp-action="Index">ПОРТФОЛИОҒА ҚАЙТУ</a>
+    </div>
+</main>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,49 +1,40 @@
 ﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser>
 
 @{
-    ViewData["Title"] = "ОПҚ | АХМЕТ ЯСАУИ УНИВЕРСИТЕТІ";
+    ViewData["Title"] = "ОПҚ | Ахмет Ясауи Университеті";
 }
 
-@*<h1>Index</h1>*@
-
-<p>
-    @*<a asp-action="Create">Create New</a>*@
-   @* <a asp-action="Info" asp-route-id="ViewBag.UserId">Толығырақ</a>*@
-</p>
 <table id="pagination" class="display">
     <thead>
         <tr>
             <th>
-                АТЫ-ЖӨНІ:
+                ТЕГІ, АТЫ, ӘКЕСІНІҢ АТЫ:
             </th>
             <th>
                 ҚҰРЫЛЫМЫ (ФАКУЛЬТЕТІ):
             </th>
-             <th>
+            <th>
                 ҚҰРЫЛЫМЫ (КАФЕДРАСЫ):
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model) {
         <tr>
-            
             <td>
-                @string.Join("  ", item.Firstname_kz, item.Middlename_kz, item.Lastname_kz)
+                @string.Join(" ", item.Lastname_kz, item.Firstname_kz, item.Middlename_kz)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Faculties.KZ_AD)
             </td>
-             <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Kafedra.KZ_AD)
             </td>
             <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
                 <a asp-action="Info" asp-route-id="@item.Id">ТОЛЫҒЫРАҚ</a> 
-                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

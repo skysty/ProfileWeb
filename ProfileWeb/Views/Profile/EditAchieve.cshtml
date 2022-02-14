@@ -1,7 +1,7 @@
 ﻿@model ProfileWeb.ViewModel.AchievementViewModel
 
 @{
-    ViewData["Title"] = "Жетістіктерді өзгерту | Ахмет Ясауи Университеті";
+    ViewData["Title"] = "Жетістіктті өзгерту | Ахмет Ясауи Университеті";
 }
 
 <main class="m-30">
@@ -14,47 +14,21 @@
         <a class="c-darkRed" target="_blank" href="https://www.youtube.com/watch?v=-SbFWF5az1g">ВИДЕО НҰСҚАУЛЫҚ</a>
     </div>
     <div class="p-30">
-        <h3 class="d-inline-block mr-5 fs-17">ЖЕТІСТІКТЕРДІ ӨЗГЕРТУ</h3>
-        <a class="py-5 px-10 c-white br-5 bgc-yellow c-darkGrey fs-13" href="profile-info1-edit-add.html">ҚОСУ</a>
+        <h3 class="d-inline-block mr-5 fs-17">ЖЕТІСТІКТІ ӨЗГЕРТУ</h3>
     </div>
     <div class="p-30 br-5 bgc-lightGrey">
-        <div class="d-block mt-10 mb-10">
-            <h2 class="d-inline mr-5 fs-17 ff-body-regular c-darkRed">Зерттеу жұмысы</h2>
-            <a class="py-5 px-10 c-darkGrey br-5 bgc-white fs-13" href="" target="_blank">КӨРУ</a>
-            <a class="py-5 px-10 c-darkGrey br-5 bgc-yellow fs-13" href="profile-info1-edit-edit.html">ӨЗГЕРТУ</a>
-            <a class="py-5 px-10 c-white br-5 bgc-darkRed fs-13" href="profile-info1-edit-delete.html">ЖОЮ</a>
-        </div>
-    </div>
-    <div class="pt-30 pl-30">
-        <a class="c-darkRed" href="profile-edit.html">ПОРТФОЛИОҒА ҚАЙТУ</a>
-    </div>
-</main>
-
-<h4>Жетістіктерді өзгерту </h4>
-<hr />
-<div class="card">
-    <div class="card-header">
-        <h3 class="text-uppercase">Жетістіктерді өзгерту</h3>
-    </div>
-    <div class="card-body">
         <form asp-action="EditAchieve" enctype="multipart/form-data">
             <input type="hidden" asp-for="Ach_Id" />
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input asp-for="KZ_Topic" class="form-control" />
-                        <span asp-validation-for="KZ_Topic" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i> ӨЗГЕРТУ</button>
-               @* <a asp-action="Index" class="btn btn-sm btn-primary rounded-0"><i class="fas fa-fast-backward"></i> Back to List</a>*@
-                <a asp-action="Index">Артқа</a>
-            </div>
+            <label class="d-block mb-5" for="">ЖЕТІСТІК:</label>
+            <input class="d-block mb-15 p-5 br-5 w-full" asp-for="KZ_Topic" />
+            <div asp-validation-for="KZ_Topic" class="c-darkRed"></div>
+            <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">ӨЗГЕРТУ</button>
         </form>
     </div>
-</div>
+    <div class="pt-30 pl-30">
+        <a class="c-darkRed" asp-action="Index">ПОРТФОЛИОҒА ҚАЙТУ</a>
+    </div>
+</main>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
