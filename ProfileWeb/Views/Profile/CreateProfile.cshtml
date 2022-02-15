@@ -20,7 +20,7 @@
         <form asp-action="CreateProfile" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="c-darkRed"></div>
             <label class="d-block mb-5" for="KZ_Title">ЗЕРТТЕУ ЖҰМЫСЫ / ЖАРИЯЛАНЫМ:</label>
-            <input class="d-block mb-10 p-5 br-5 w-full" type="text" asp-for="KZ_Title"/>
+            <input class="d-block mb-10 p-5 br-5 w-full" asp-for="KZ_Title"/>
             <div asp-validation-for="KZ_Title" class="c-darkRed"></div>
             <label class="d-block mb-5" for="Document">PDF-ФАЙЛ:</label>
             <input class="d-block mb-15 p-5 br-5 w-300" asp-for="Document" accept=".pdf" />

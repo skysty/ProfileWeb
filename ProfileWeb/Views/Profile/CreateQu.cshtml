@@ -20,7 +20,7 @@
         <form asp-action="CreateQu" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="c-darkRed"></div>
             <label class="d-block mb-5" for="KZ_Qu">БІЛІКТІЛІК:</label>
-            <input class="d-block mb-15 p-5 br-5 w-full" type="text" asp-for="KZ_Qu"/>
+            <input class="d-block mb-15 p-5 br-5 w-full" asp-for="KZ_Qu"/>
             <div asp-validation-for="KZ_Qu" class="c-darkRed"></div>
             <button class="d-block py-5 px-10 br-5 bgc-darkBlue c-white" type="submit">ҚОСУ</button>
         </form>
