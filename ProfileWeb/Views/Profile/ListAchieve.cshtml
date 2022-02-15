@@ -1,41 +1,42 @@
 ﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser>
 
 @{
-    ViewData["Title"] = "Жетістіктер";
+    ViewData["Title"] = "Жетістіктер тізімі | Ахмет Ясауи Университеті";
 }
 
-<h1>Жетістіктер</h1>
-@foreach (var item1 in Model) {
-<p>
-    <a asp-action="CreateAchieve" asp-route-id="@item1.Id">Жаңа жетістіктерді  қосу</a>
-</p>
-}
-<table class="table">
-    <thead>
-        <tr>
-           <th>Жетістіктер</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-            @foreach(var itemi in item.Achievements){
-         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => itemi.KZ_Topic)
-            </td>
-            <td>
-                <a asp-action="EditAchieve" asp-route-id="@itemi.Topic_Id">Түзету</a> |
-                <a asp-action="DeleteAchieve" asp-route-id="@itemi.Topic_Id">Жою</a>
-            </td>
-        </tr> 
-            }
-           
-}
-    </tbody>
-</table>
-@foreach (var item1 in Model) {
-<p>
-    <a asp-action="Details" asp-route-id="@item1.Id"> Профильге қайту</a>
-</p>
-}
+<main class="m-30">
+    <div class="flex flex-between p-30 br-5 bgc-lightGrey">
+        <div>
+            <a class="c-darkRed" href="">ОПҚ ТІЗІМІ</a>
+            /
+            <a class="c-darkGrey disabled" href="">ОҚЫТУШЫ-ПРОФЕССОР ПОРТФОЛИОСЫ</a>
+        </div>
+        <a class="c-darkRed" target="_blank" href="https://www.youtube.com/watch?v=-SbFWF5az1g">ВИДЕО НҰСҚАУЛЫҚ</a>
+    </div>
+    @foreach (var item1 in Model)
+    {
+    <div class="p-30">
+        <h3 class="d-inline-block mr-5 fs-17">ЖЕТІСТІКТЕР ТІЗІМІ</h3>
+        <a class="py-5 px-10 c-white br-5 bgc-yellow c-darkGrey fs-13 bsh-grey-hover" asp-action="CreateAchieve" asp-route-id="@item1.Id">ҚОСУ</a>
+    </div>
+    }
+    @foreach (var item in Model)
+    {
+    <div class="p-30 br-5 bgc-lightGrey">
+        @foreach(var itemi in item.Achievements)
+        {
+        <div class="d-block mt-10 mb-10">
+            <h2 class="d-inline mr-5 fs-17 ff-body-regular c-darkRed">@Html.DisplayFor(modelItem => itemi.KZ_Topic)</h2>
+            <a class="py-5 px-10 c-darkGrey br-5 bgc-yellow fs-13 bsh-grey-hover" asp-action="EditAchieve" asp-route-id="@itemi.Topic_Id">ӨЗГЕРТУ</a>
+            <a class="py-5 px-10 c-white br-5 bgc-darkRed fs-13 bsh-grey-hover" asp-action="DeleteAchieve" asp-route-id="@itemi.Topic_Id">ЖОЮ</a>
+        </div>
+        }
+    </div>
+    }
+    @foreach (var item1 in Model)
+    {
+    <div class="pt-30 pl-30">
+        <a class="c-darkRed" asp-action="Details" asp-route-id="@item1.Id">ПОРТФОЛИОҒА ҚАЙТУ</a>
+    </div>
+    }
+</main>

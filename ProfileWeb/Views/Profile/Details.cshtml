@@ -1,177 +1,121 @@
-﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser>
+﻿@model IEnumerable<ProfileWeb.Models.ApplicationUser
 
 @{
-    ViewData["Title"] = "ОПҚ ПРОФИЛІ";
+    ViewData["Title"] = "Оқытушы-профессор портфолиосы | Ахмет Ясауи Университеті";
 }
 
-<h1>ОПҚ ПРОФИЛІ</h1>
-@*<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Түзету</a> |
-    <a asp-action="EditProfile" asp-route-id="@Model.Id">Зерттеу жұмыстарын қосу</a> |
-    <a asp-action="EditQu" asp-route-id="@Model.Id">Біліктілікті жетілдіру</a> |
-    <a asp-action="EditWork" asp-route-id="@Model.Id">Еңбек жолы</a> |
-     <a asp-action="EditAchive" asp-route-id="@Model.Id">Жетістіктер</a> |
-</div>*@
-@foreach (var item in Model)
-{
-    <div class="container-2">
-         <p><a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
-      <div class="left">
-        @if (item.PhotoUrl != null)
-                             {
-                                 <img class="portrait" src="~/images/@item.PhotoUrl" alt="">
-                             }
-                             else
-                             {
-                                 <img class="portrait" src="~/photo/tps-img.png" alt="">
-                             }
-         </div>
-   
-   
-        <div class="right">
-            <p class="first">АТЫ-ЖӨНІ:</p>
-                    <p class="sql">@Html.DisplayFor(modelItem => item.Firstname_kz)  @Html.DisplayFor(modelItem => item.Middlename_kz) @Html.DisplayFor(modelItem => item.Lastname_kz)</p>
-                    <p>ҚҰРЫЛЫМЫ (БӨЛІМІ, ФАКУЛЬТЕТІ, КАФЕДРАСЫ):</p>
-                    <p class="sql">@Html.DisplayFor(modelItem => item.Faculties.KZ_AD)
-                        <br>@Html.DisplayFor(modelItem => item.Kafedra.KZ_AD)</p>
-                    <p>ҚЫЗМЕТІ (ҒЫЛЫМИ ДӘРЕЖЕСІ, АТАҒЫ):</p>
-                    <p class="sql">@Html.DisplayFor(modelItem => item.Degree.TR_AD)
-                        <br>@Html.DisplayFor(modelItem => item.Ranks.TR_AD)
-                    </p>
-                    <p>МЕКЕН-ЖАЙЫ:</p>
-                    <p class="sql">@Html.DisplayFor(modelItem => item.Address)</p>
-                    <p>ТЕЛЕФОНЫ:</p>
-                    <p class="sql">@Html.DisplayFor(modelItem => item.PhoneNumber)</p>
-                    <p>КОРПОРАТИВТІ ПОШТАСЫ:</p>
-                    <p class="sql last">@Html.DisplayFor(modelItem => item.Email)</p>
+<main class="mt-30 mr-30 ml-30">
+    <div class="flex flex-between mb-30 p-30 br-5 bgc-lightGrey">
+        <div>
+            <a class="c-darkRed" href="">ОПҚ ТІЗІМІ</a>
+            /
+            <a class="c-darkGrey disabled" href="">ОҚЫТУШЫ-ПРОФЕССОР ПОРТФОЛИОСЫ</a>
         </div>
-        
-</div>
-}
-
-          <div class="container-3">
-           @foreach (var item in Model){
-                <p>ЗЕРТТЕУ ЖҰМЫСТАРЫ, ЖАРИЯЛАНЫМДАРЫ (ПРИОРИТЕТТІ БАҒЫТТАРЫ)<a asp-action="ListFolder" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
-                 }
-                <p>
-                        <button id="toggleIcon1" onclick="toggle1()">&gt;</button>
-                </p>
-                <p id="sql1" class="sql toggle">
-                    @foreach (var item in Model)
-                    {
-                         @foreach (var res in item.Researches)
-                            {
-                                @if (res.KZ_Title != null)
-                                {
-
-                                    @Html.DisplayFor(modelItem => res.KZ_Title)   <a  href="~/documents/@res.FileUrl"  target="_blank" asp-append-version="true">ТОЛЫҒЫРАҚ</a><br>
-                                }else{
-                                     <a href="#">Деректер жоқ</a><br>
-                                }
-                            }
-                    }  
-                </p>
-                 @foreach (var item in Model){
-                <p>ЖЕТІСТІКТЕРІ<a asp-action="ListAchieve" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
-                 }
-                 <p>
-                    <button id="toggleIcon2" onclick="toggle2()">&gt;</button>
-                </p>
-                <p id="sql2" class="sql toggle">@foreach (var item in Model){
-                    @foreach (var achievement in item.Achievements)
-                            {
-                                @if (achievement.KZ_Topic != null)
-                                {
-
-                                    @Html.DisplayFor(modelItem => achievement.KZ_Topic)<br>
-                                }else{
-                                      <a href="#">Деректер жоқ</a><br>
-                                }
-                            }
-                    }   
-                </p> 
-                
-              
-                @foreach (var item in Model){
-                <p>ЕҢБЕК ЖОЛЫ<a asp-action="ListWork" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
-                 }
-                <p>
-                    <button id="toggleIcon3" onclick="toggle3()">&gt;</button>
-                </p>
-                <p id="sql3" class="sql toggle">@foreach (var item in Model){
-                    @foreach (var workway in item.Workways)
-                            {
-                                @if (workway.KZ_Work != null)
-                                {
-                                    @Html.DisplayFor(modelItem => workway.KZ_Work)<br>
-                                }else{
-                                      <a href="#">Деректер жоқ</a><br>
-                                }
-                            }
-                    }   
-                </p>
-                @foreach (var item in Model){
-                <p>БІЛІКТІЛІКТІ ЖЕТІЛДІРУІ<a asp-action="ListQu" asp-route-id="@item.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i>Түзету</a></p>
+        <a class="c-darkRed" target="_blank" href="https://www.youtube.com/watch?v=-SbFWF5az1g">ВИДЕО НҰСҚАУЛЫҚ</a>
+    </div>
+    <div class="flex flex-between flex-y-top p-30 br-5 bgc-lightGrey">
+        @foreach (var item in Model)
+        {
+        <div>
+            <div class="d-inline-block va-top">
+                @if (item.PhotoUrl != null)
+                {
+                <img class="w-300 mr-30 br-5 b-5 bc-darkRed" src="~/images/@item.PhotoUrl" alt="Суреті" />
                 }
-                <p>
-                    <button id="toggleIcon4" onclick="toggle4()">&gt;</button>
+                else
+                {
+                <img class="w-300 mr-30 br-5 b-5 bc-darkRed" src="~/photo/tps-img.png" alt="Суреті" />
+                }
+            </div>
+            <div class="d-inline-block va-top">
+                <h3 class="fs-17 mb-5">ТАӘ:</h3>
+                <p class="mb-15 c-darkRed">@Html.DisplayFor(modelItem => item.Lastname_kz) @Html.DisplayFor(modelItem => item.Firstname_kz) @Html.DisplayFor(modelItem => item.Middlename_kz)</p>
+                <h3 class="fs-17 mb-5">ФАКУЛЬТЕТІ / КАФЕДРАСЫ:</h3>
+                <p class="mb-15 c-darkRed">
+                    @Html.DisplayFor(modelItem => item.Faculties.KZ_AD)<br />
+                    @Html.DisplayFor(modelItem => item.Kafedra.KZ_AD)
                 </p>
-                <p id="sql4" class="sql toggle"> @foreach (var item in Model){
-                    @foreach (var qulification in item.Qulifications)
-                            {
-                                @if (qulification.KZ_Qu != null)
-                                {
-
-                                    @Html.DisplayFor(modelItem => qulification.KZ_Qu)<br>
-                                }else{
-                                      <a href="#">Деректер жоқ</a><br>
-                                }
-                            }
-                    }   
+                <h3 class="fs-17 mb-5">ҒЫЛЫМИ ДӘРЕЖЕСІ / АТАҒЫ / ЛАУАЗЫМЫ:</h3>
+                <p class="mb-15 c-darkRed">
+                    @Html.DisplayFor(modelItem => item.Degree.TR_AD)<br />
+                    @Html.DisplayFor(modelItem => item.Ranks.TR_AD)<br />
                 </p>
-          </div>
-        <script>
-        function toggle1() {
-            var x = document.getElementById("sql1");
-            if (x.style.display === "block") {
-                document.getElementById("toggleIcon1").innerHTML = ">";
-                x.style.display = "none";
-            } else {
-                x.style.display = "block";
-                document.getElementById("toggleIcon1").innerHTML = "<";
-            }
+                <h3 class="fs-17 mb-5">ЖҰМЫС МЕКЕН-ЖАЙЫ:</h3>
+                <p class="mb-15 c-darkRed">@Html.DisplayFor(modelItem => item.Address)</p>
+                <h3 class="fs-17 mb-5">ЖҰМЫС ТЕЛЕФОНЫ:</h3>
+                <p class="mb-15 c-darkRed">@Html.DisplayFor(modelItem => item.PhoneNumber)</p>
+                <h3 class="fs-17 mb-5">КОРПОРАТИВТІ ПОШТАСЫ:</h3>
+                <p class="mb-15 c-darkRed">@Html.DisplayFor(modelItem => item.Email)</p>
+            </div>
+        </div>
+        <a class="py-5 px-10 c-white br-5 bgc-yellow c-darkGrey fs-13 bsh-grey-hover bsh-grey-hover" asp-action="Edit" asp-route-id="@item.Id">ӨЗГЕРТУ</a>
         }
-
-        function toggle2() {
-            var x = document.getElementById("sql2");
-            if (x.style.display === "block") {
-                document.getElementById("toggleIcon2").innerHTML = ">";
-                x.style.display = "none";
-            } else {
-                x.style.display = "block";
-                document.getElementById("toggleIcon2").innerHTML = "<";
+    </div>
+    <div class="p-30">
+        <div class="mb-15">
+            <h1 class="mr-5 d-inline-block fs-17">ЗЕРТТЕУ ЖҰМЫСТАРЫ / ЖАРИЯЛАНЫМДАРЫ</h1>
+            @foreach (var item in Model)
+            {
+            <a class="py-5 px-10 c-white br-5 bgc-yellow c-darkGrey fs-13 bsh-grey-hover" asp-action="ListFolder" asp-route-id="@item.Id">ӨЗГЕРТУ</a>
             }
-        }
-
-        function toggle3() {
-            var x = document.getElementById("sql3");
-            if (x.style.display === "block") {
-                document.getElementById("toggleIcon3").innerHTML = ">";
-                x.style.display = "none";
-            } else {
-                x.style.display = "block";
-                document.getElementById("toggleIcon3").innerHTML = "<";
+            @foreach (var item in Model)
+            {
+            <div class="d-block mt-10 mb-10">
+                @foreach (var res in item.Researches)
+                {
+                <h2 class="d-inline mr-5 fs-17 ff-body-regular c-darkRed">@Html.DisplayFor(modelItem => res.KZ_Title)</h2>
+                <a class="py-5 px-10 c-darkGrey br-5 bgc-lightGrey fs-13 bsh-grey-hover" href="~/documents/@res.FileUrl" target="_blank" asp-append-version="true">КӨРУ</a>
+                }
+            </div>
             }
-        }
-
-        function toggle4() {
-            var x = document.getElementById("sql4");
-            if (x.style.display === "block") {
-                document.getElementById("toggleIcon4").innerHTML = ">";
-                x.style.display = "none";
-            } else {
-                x.style.display = "block";
-                document.getElementById("toggleIcon4").innerHTML = "<";
+        </div>
+        <div class="mb-15">
+            <h3 class="mr-5 d-inline-block fs-17">ЖЕТІСТІКТЕРІ</h3>
+            @foreach (var item in Model)
+            {
+            <a class="py-5 px-10 c-white br-5 bgc-yellow c-darkGrey fs-13 bsh-grey-hover" asp-action="ListAchieve" asp-route-id="@item.Id">ӨЗГЕРТУ</a>
             }
-        }
-        </script>
+            @foreach (var item in Model)
+            {
+            <div class="d-block mt-10 mb-10">
+                @foreach (var res in item.Achievements)
+                {
+                <h2 class="d-inline mr-5 fs-17 ff-body-regular c-darkRed">@Html.DisplayFor(modelItem => achievement.KZ_Topic)</h2>
+                }
+            </div>
+            }
+        </div>
+        <div class="mb-15">
+            <h3 class="mr-5 d-inline-block fs-17">ЕҢБЕК ЖОЛЫ</h3>
+            @foreach (var item in Model)
+            {
+            <a class="py-5 px-10 c-white br-5 bgc-yellow c-darkGrey fs-13 bsh-grey-hover" asp-action="ListWork" asp-route-id="@item.Id">ӨЗГЕРТУ</a>
+            }
+            @foreach (var item in Model)
+            {
+            <div class="d-block mt-10 mb-10">
+                @foreach (var res in item.Workways)
+                {
+                <h2 class="d-inline mr-5 fs-17 ff-body-regular c-darkRed">@Html.DisplayFor(modelItem => workway.KZ_Work)</h2>
+                }
+            </div>
+            }
+        </div>
+        <div>
+            <h3 class="mr-5 d-inline-block fs-17">БІЛІКТІЛІКТІ ЖЕТІЛДІРУІ</h3>
+            @foreach (var item in Model)
+            {
+            <a class="py-5 px-10 c-white br-5 bgc-yellow c-darkGrey fs-13 bsh-grey-hover" asp-action="ListQu" asp-route-id="@item.Id">ӨЗГЕРТУ</a>
+            }
+            @foreach (var item in Model)
+            {
+            <div class="d-block mt-10 mb-10">
+                @foreach (var res in item.Qulifications)
+                {
+                <h2 class="d-inline mr-5 fs-17 ff-body-regular c-darkRed">@Html.DisplayFor(modelItem => qulification.KZ_Qu)</h2>
+                }
+            </div>
+            }
+        </div>
+    </div>
+</main>

@@ -20,7 +20,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @string.Join(" ", item.Lastname_kz, item.Firstname_kz, item.Middlename_kz)
